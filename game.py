@@ -3,7 +3,6 @@ import pygame.sprite
 from boring import config
 from boring.config import Color
 from engine import GameEngine
-from game_window import first_window
 
 
 class Game:
@@ -11,7 +10,8 @@ class Game:
         self.game_is_on = True
         self.win = win
 
-        self.engine = GameEngine(first_window)
+        self.engine = GameEngine()
+        self.engine.change_scene_to("entrance")
 
     def run(self):
         clock = pygame.time.Clock()
