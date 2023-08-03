@@ -22,11 +22,12 @@ class GameScene:
     These windows are rendered in the game engine
     """
 
-    def __init__(self, engine: "GameEngine"):
+    def __init__(self, engine):
         self.background: pygame.Surface | None = None
         self.escape_points: List[EscapePoint] | None = None
+        self.charcter: Character | None = None
 
-        self.engine: "GameEngine" = engine
+        self.engine = engine
 
     def load_scene(self, scene_name: str):
         scene_data = data.scenes_data[scene_name]
@@ -34,12 +35,13 @@ class GameScene:
         self.escape_points = []
         for point_data in scene_data["escape_points"]:
             self.escape_points.append(EscapePoint(**point_data, game_engine=self.engine))
-
+        if "character" in scene_data:
+            self.charcter = Character(**scene_data["character"])
         return self
 
 
 class EscapePoint(Clickable):
-    def __init__(self, position: Tuple[int, int], destination: 'GameScene', game_engine: "GameEngine"):
+    def __init__(self, position: Tuple[int, int], destination: 'GameScene', game_engine):
         super().__init__(self.go_to_next_scene)
         self.position = position
         self.destination = destination
@@ -54,3 +56,18 @@ class EscapePoint(Clickable):
         self.game_engine.change_scene_to(self.destination)
 
 
+class Character:
+    def __init__(self, name: str, position: Tuple[int, int]):
+        self.name = name
+        self.position = position
+
+        self.images = {}  # {humeur: image}
+        self.load_images()
+
+        self.humeur = "neutral"
+
+    def load_images(self):
+        self.images = images.characters_images[self.name]
+
+    def draw(self, screen):
+        screen.blit(self.images[self.humeur], self.position)

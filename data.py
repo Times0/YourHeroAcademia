@@ -13,7 +13,11 @@ scenes_data = {
             {
                 "position": (200, 200),
                 "destination": "lockers"
-            }]
+            }],
+        "character": {
+            "name": "deku_school_uniform",
+            "position": (500, 100)
+        }
     },
 
     "lockers": {

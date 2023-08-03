@@ -12,7 +12,6 @@ class GameEngine:
         for point in self.current_window.escape_points:
             point.handle_events(events)
 
-
     def update(self, dt):
         pass
 
@@ -25,6 +24,10 @@ class GameEngine:
         # draw escape points
         for point in self.current_window.escape_points:
             point.draw(screen)
+
+        # draw character
+        if self.current_window.charcter:
+            self.current_window.charcter.draw(screen)
 
     def change_scene_to(self, scene_name):
         self.current_window = self.get_scene(scene_name)

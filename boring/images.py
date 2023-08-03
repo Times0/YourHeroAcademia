@@ -1,7 +1,9 @@
 import glob
 import os
-from boring.config import *
+
 import pygame
+
+from boring.config import *
 
 if __name__ == "__main__":
     pygame.init()
@@ -28,7 +30,24 @@ def load_multiple(path):
     return l
 
 
+def load_character(dir_path) -> dict[str, pygame.Surface]:
+    """
+    Returns a dictionary of the character's images with the name of the image as the key, and the image as the value
+    The keys are supposed to be the character's moods
+    """
+    d = {}
+    for path in glob.glob(os.path.join(cwd, "..", "assets", dir_path, "*.png")):
+        d[os.path.basename(path).split(".")[0]] = pygame.image.load(path).convert_alpha()
+    return d
+
+
 # __________________________Imports___________________________________#
 
 main_menu_bg = load("main_menu/bg.jpg", (WIDTH, HEIGHT))
 
+characters_images = {}
+
+for character in os.listdir(os.path.join(cwd, "..", "assets", "characters")):
+    characters_images[character] = load_character(os.path.join("characters", character))
+
+print(characters_images)
