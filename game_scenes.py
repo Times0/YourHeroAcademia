@@ -1,3 +1,4 @@
+import logging
 import os.path
 from typing import List, Tuple
 
@@ -6,7 +7,10 @@ import pygame
 import data
 from boring import images
 from boring.config import WIDTH, HEIGHT
+from dialogue import Monologue, Dialogue
 from ui import Clickable
+
+logger = logging.getLogger(__name__)
 
 
 class GameScene:
@@ -27,7 +31,16 @@ class GameScene:
         self.escape_points: List[EscapePoint] | None = None
         self.charcter: Character | None = None
 
+        self.events = []
+        self.event_index = 0
+
         self.engine = engine
+
+    def get_current_event(self) -> "Monologue" or "Dialogue" or None:
+        if self.event_index < len(self.events):
+            return self.events[self.event_index]
+        else:
+            return None
 
     def load_scene(self, scene_name: str):
         scene_data = data.scenes_data[scene_name]
@@ -37,7 +50,18 @@ class GameScene:
             self.escape_points.append(EscapePoint(**point_data, game_engine=self.engine))
         if "character" in scene_data:
             self.charcter = Character(**scene_data["character"])
+        if "events" in scene_data:
+            for event_data in scene_data["events"]:
+                self.events.append(create_event_from_data(event_data, self))
         return self
+
+    def next_event(self):
+        self.event_index += 1
+
+
+def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
+    if event_data["type"] == "monologue":
+        return Monologue(**event_data["data"], scene=scene)
 
 
 class EscapePoint(Clickable):
@@ -60,14 +84,8 @@ class Character:
     def __init__(self, name: str, position: Tuple[int, int]):
         self.name = name
         self.position = position
-
-        self.images = {}  # {humeur: image}
-        self.load_images()
-
         self.humeur = "neutral"
 
-    def load_images(self):
-        self.images = images.characters_images[self.name]
-
     def draw(self, screen):
-        screen.blit(self.images[self.humeur], self.position)
+        img = images.loader.get_image(self.name, self.humeur)
+        screen.blit(img, img.get_rect(center=self.position))

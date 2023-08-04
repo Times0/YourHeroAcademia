@@ -3,34 +3,40 @@ from game_scenes import GameScene
 
 class GameEngine:
     def __init__(self):
-        self.current_window = None
+        self.current_scene:GameScene|None = None
         self.loaded_scenes = {}
 
     def handle_events(self, events):
-        if not self.current_window:
+        if not self.current_scene:
             return
-        for point in self.current_window.escape_points:
+        for point in self.current_scene.escape_points:
             point.handle_events(events)
+        if self.current_scene.get_current_event() is not None:
+            self.current_scene.get_current_event().handle_events(events)
 
     def update(self, dt):
         pass
 
     def draw(self, screen):
-        if not self.current_window:
+        if not self.current_scene:
             return
         # draw background
-        screen.blit(self.current_window.background, (0, 0))
-
-        # draw escape points
-        for point in self.current_window.escape_points:
-            point.draw(screen)
+        screen.blit(self.current_scene.background, (0, 0))
 
         # draw character
-        if self.current_window.charcter:
-            self.current_window.charcter.draw(screen)
+        if self.current_scene.charcter:
+            self.current_scene.charcter.draw(screen)
+
+        # draw mono/dialogues
+        if self.current_scene.get_current_event() is not None:
+            self.current_scene.get_current_event().draw(screen)
+
+        # draw escape points
+        for point in self.current_scene.escape_points:
+            point.draw(screen)
 
     def change_scene_to(self, scene_name):
-        self.current_window = self.get_scene(scene_name)
+        self.current_scene = self.get_scene(scene_name)
 
     def get_scene(self, scene_name: str) -> GameScene:
         if scene_name in self.loaded_scenes:
