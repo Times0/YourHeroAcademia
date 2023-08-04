@@ -52,7 +52,7 @@ class Game:
     def draw(self, win):
         win.fill(Color("Black"))
         self.engine.draw(win)
-        self.btn_quit.draw(win, *self.btn_quit.image.get_rect(topright=(config.WIDTH, 0)).topleft)
+        self.btn_quit.draw(win, *self.btn_quit.image.get_rect(topright=(config.WIDTH-15, 15)).topleft)
         pygame.display.flip()
 
     def quit(self):

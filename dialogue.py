@@ -3,6 +3,7 @@ import logging
 import pygame
 from pygame.locals import *
 
+from boring import images
 from boring.config import WIDTH, HEIGHT
 from boring.fonts import get_font
 
@@ -11,12 +12,12 @@ logger = logging.getLogger(__name__)
 defaul_font = get_font("animeace.ttf", 30)
 
 
-def cut_unfinished_sentence(words, punctuation=".?!"):
+def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…", "\n")):
     """Cut the last word if it is not finished."""
     # find index of the last punctuation
     last_punctuation_index = -1
     for i, (word, _) in enumerate(words):
-        if word[-1] in punctuation:
+        if word and word[-1] in punctuation:
             last_punctuation_index = i
     if last_punctuation_index == -1:
         return words, []
@@ -32,7 +33,7 @@ class Monologue:
     """
 
     def __init__(self, text: str, character: dict = None, scene=None):
-        from game_scenes import Character
+        from scene import Character
         self.scene = scene
 
         if character is not None:
@@ -43,15 +44,20 @@ class Monologue:
         self.rect_alpha = 200
         self.font = defaul_font
 
-        self._init_rects(1500, 300, 50)
+        x, y = (587, 769)
+        x1, y1 = (1778, 956)
+
+        w, h = (x1 - x, y1 - y)
+
+        self._init_rects((x, y), w, h, 50)
         self._init_text()
         self._render_all()
 
-    def _init_rects(self, width: int, height: int, offset: int):
+    def _init_rects(self, pos, width: int, height: int, offset: int):
         """Initialize the rectangles for the text display."""
-        x, y = WIDTH / 2 - width / 2, HEIGHT - height - offset
-        self.countour_rect = pygame.Rect(x, y, width, height)
-        self.text_rect = self.countour_rect.inflate(-150, -150)
+
+        self.countour_rect = pygame.Rect(*pos, width, height)
+        self.text_rect = self.countour_rect.inflate(-20, -20)
 
     def _init_text(self):
         """Initialize the text related attributes."""
@@ -70,7 +76,7 @@ class Monologue:
         cursor = 0
         while cursor < len(self.words_in_text):
             word = self.words_in_text[cursor]
-            word_surface = self.font.render(word + " ", True, Color("White"))
+            word_surface = self.font.render(word + " ", True, Color("Black"))  # Fake render to get the size
             word_width, word_height = word_surface.get_size()
 
             if current_width + word_width > max_width:
@@ -99,7 +105,7 @@ class Monologue:
     def _render_words(self, words, surface):
         """Render the words on the surface."""
         for word, (x, y) in words:
-            word_surface = self.font.render(word + " ", True, Color("White"))
+            word_surface = self.font.render(word + " ", True, Color("Black"))
             surface.blit(word_surface, (x, y))
 
     def _append_current_surface(self, surface):
@@ -133,8 +139,9 @@ class Monologue:
 
     def _draw_background(self, screen):
         """Draws the background for the monologue."""
-        pygame.draw.rect(screen, Color("Black"), self.countour_rect, 0, border_radius=self.border_radius)
-        pygame.draw.rect(screen, Color("White"), self.text_rect, 1)
+        # pygame.draw.rect(screen, Color("Black"), self.countour_rect, 0, border_radius=self.border_radius)
+        # pygame.draw.rect(screen, Color("White"), self.text_rect, 1)
+        screen.blit(images.text_contour, (150, 500))
 
     def _draw_text(self, screen):
         """Draws the text of the current chunk."""
@@ -143,8 +150,8 @@ class Monologue:
     def _draw_chunk_number(self, screen):
         """Draws the number of the current chunk on the screen."""
         chunk_text = f"{self.current_chunk + 1}/{self.nb_chunks}"
-        chunk_surface = self.font.render(chunk_text, True, Color("White"))
-        screen.blit(chunk_surface, chunk_surface.get_rect(bottomright=self.countour_rect.bottomright))
+        chunk_surface = self.font.render(chunk_text, True, Color("Black"))
+        screen.blit(chunk_surface, chunk_surface.get_rect(bottomright=self.countour_rect.bottomright).move(-10, -10))
 
 
 class Dialogue:

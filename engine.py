@@ -1,4 +1,4 @@
-from game_scenes import GameScene
+from scene import GameScene
 
 
 class GameEngine:

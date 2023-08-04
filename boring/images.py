@@ -51,6 +51,8 @@ def load_character(name) -> dict[str, pygame.Surface]:
 
 main_menu_bg = load("main_menu/bg.jpg", (WIDTH, HEIGHT))
 btn_quit = load("ui/quit.png")
+text_contour = load("scenes/ui/text_contour.png")
+
 
 class CharacterImageLoader:
     def __init__(self):
