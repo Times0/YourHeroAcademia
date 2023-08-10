@@ -7,6 +7,7 @@ import pygame
 import data
 from boring import images
 from boring.config import WIDTH, HEIGHT
+from character import Character
 from dialogue import Monologue, Dialogue
 from ui import Clickable
 
@@ -61,7 +62,10 @@ class GameScene:
 
 def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
     if event_data["type"] == "monologue":
-        return Monologue(**event_data["data"], scene=scene)
+        return Monologue(**event_data["data"], current_scene=scene)
+    elif event_data["type"] == "dialogue":
+        print(event_data["data"])
+        return Dialogue(**event_data["data"], current_scene=scene)
 
 
 class EscapePoint(Clickable):
@@ -78,14 +82,3 @@ class EscapePoint(Clickable):
 
     def go_to_next_scene(self):
         self.game_engine.change_scene_to(self.destination)
-
-
-class Character:
-    def __init__(self, name: str, position: Tuple[int, int]):
-        self.name = name
-        self.position = position
-        self.humeur = "neutral"
-
-    def draw(self, screen):
-        img = images.loader.get_image(self.name, self.humeur)
-        screen.blit(img, img.get_rect(center=self.position))
