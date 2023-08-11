@@ -6,7 +6,6 @@ from pygame.locals import *
 from boring import images
 from boring.config import WIDTH, HEIGHT
 from boring.fonts import get_font
-
 from scene import Character
 
 logger = logging.getLogger(__name__)
@@ -14,7 +13,7 @@ logger = logging.getLogger(__name__)
 defaul_font = get_font("animeace.ttf", 30)
 
 
-def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…", "\n")):
+def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…")):
     """Cut the last word if it is not finished."""
     # find index of the last punctuation
     last_punctuation_index = -1
@@ -48,6 +47,10 @@ class TextBox:
 
         words = self.text.split(" ")
         for word in words:
+            if word == "\n":
+                current_width = 0
+                current_height += self.font.get_height()
+                continue
             word_surface = self.font.render(word, True, self.color)
             word_width, word_height = word_surface.get_size()
             if current_width + word_width > self.width:
@@ -61,16 +64,19 @@ class MultiTextBox:
     def __init__(self, text,
                  font=defaul_font,
                  text_color=Color("white"),
-                 size=(WIDTH, HEIGHT), ):
+                 position=None,
+                 size=(WIDTH, HEIGHT)):
         self.text = text
         self.font = font
         self.text_color = text_color
         self.width, self.height = size
+        self.position = position
 
         self.surfaces = []
         self.current_index = 0
 
-        self.requires_render = True
+        self.render_smart()
+        self.requires_render = False
 
     def render_smart(self):
         """
@@ -85,6 +91,13 @@ class MultiTextBox:
         cursor = 0
         while cursor < len(words_of_text):
             word = words_of_text[cursor]
+            if word[0] == "\n" and current_height != 0:
+                current_width = 0
+                current_height += self.font.get_height()
+                word = word[1:]
+            # remove \n from the word
+            word = word.replace("\n", "")
+
             word_surface = self.font.render(word + " ", True, self.text_color)  # Fake render to get the size
             word_width, word_height = word_surface.get_size()
 
@@ -116,14 +129,18 @@ class MultiTextBox:
             word_surface = self.font.render(word + " ", True, Color("Black"))
             surface.blit(word_surface, (x, y))
 
-    def draw(self, win, pos=(0, 0)):
+    def draw(self, win, pos=None):
         """Draw the current surface."""
+        if pos is not None:
+            self.position = pos
         if self.requires_render:
             self.render_smart()
             self.requires_render = False
+
+        rect = pygame.Rect(*self.position, self.width, self.height)
         if debug:
-            pygame.draw.rect(win, Color("red"), (pos[0], pos[1], self.width, self.height), 1)
-        win.blit(self.surfaces[self.current_index], (pos[0] + 5, pos[1] + 5))
+            pygame.draw.rect(win, Color("red"), rect, 1)
+        win.blit(self.surfaces[self.current_index], self.position)
 
 
 class Logue:
@@ -180,7 +197,8 @@ class Monologue(Logue):
         """Handle the space key event."""
         self.text_box.current_index += 1
         if self.text_box.current_index >= len(self.text_box.surfaces):
-            self.current_scene.next_event()
+            if self.current_scene is not None:
+                self.current_scene.next_event()
 
     def draw(self, screen):
         """Draws the monologue on the screen."""
@@ -193,8 +211,7 @@ class Monologue(Logue):
     def _draw_page_counter(self, screen):
         """Draws the page counter on the screen."""
         page_counter = self.font.render(
-            f"{self.text_box.current_index + 1}/{len(self.text_box.surfaces)}", True, Color("Black")
-        )
+            f"{self.text_box.current_index + 1}/{len(self.text_box.surfaces)}", True, Color("Black"))
         screen.blit(page_counter, page_counter_rect.topleft)
 
 
@@ -202,15 +219,18 @@ class LineOther:
     """
     Type for a piece of dialogue that the other character says.
     text is the text that the character says.
-    answers is a list of answers that the player can choose from. Each answer contains the suite of the dialogue
+    Either answers or monologue is not None.
+    Answers is a list of LinePlayer that contains the answers that the player can give and the next line of dialogue
+    Monologue is a string that the character says after the text is finished.
     """
 
-    def __init__(self, text, answers: dict):
+    def __init__(self, text, answers: dict = None, monologue: str = None):
         self.text = text
         if answers is not None:
-            self.answers: list[LinePlayer] = [LinePlayer(**answer) for answer in answers]
+            self.answers = [LinePlayer(**answer) for answer in answers]
         else:
             self.answers = None
+        self.monologue = monologue
 
 
 class LinePlayer:
@@ -220,7 +240,8 @@ class LinePlayer:
     line is the next line of dialogue that the other character says.
     """
 
-    def __init__(self, text: str, line: dict):
+    def __init__(self, preview: str, text: str, line: dict):
+        self.preview: str = preview
         self.text: str = text
         if line is not None:
             self.line: LineOther = LineOther(**line)
@@ -298,24 +319,34 @@ CHARACTER_POS = (WIDTH / 2, HEIGHT / 2)
 class Dialogue(Logue):
     def __init__(self, line, character=None, current_scene=None):
         super().__init__(border_radius=15, rect_alpha=200, font=defaul_font, current_scene=current_scene)
-
-        self.whole_interaction: LineOther | LinePlayer | None = None
-        self.init_lines(line)
-        self.current_line: LineOther | LinePlayer = self.whole_interaction
-
-        self.answers_ui = [AnswerUI(e.text) for e in self.current_line.answers]
-
         self.character = Character(name=character, position=CHARACTER_POS)
-
         self.dialogue_box_rect = pygame.Rect(150, 300, 500, 500)
-        self.text_box = MultiTextBox(self.current_line.text, size=self.dialogue_box_rect.size)
-
         self.answers_box_rect = monologue_rect
 
-    def init_lines(self, line_data):
-        self.whole_interaction = LineOther(**line_data)
+        self.whole_interaction: LineOther = LineOther(**line)
+        self.current_line: LineOther | LinePlayer = self.whole_interaction
 
-    def _draw_background(self, screen):
+        self.answers_ui = []
+        self.chosen_answer: LinePlayer | None = None
+
+        self.character_text_box = None
+        self.player_answer: Monologue | None = None
+        self.player_monologue: Monologue | None = None
+
+        self.step = 0  # 0 = character text, 1 = both, 2 = answer text
+
+        self.render_text_boxes()
+
+    def render_text_boxes(self):
+        if self.current_line is None:
+            return
+        self.character_text_box = MultiTextBox(self.current_line.text, size=self.dialogue_box_rect.size)
+        if self.current_line.answers is not None:
+            self._init_answers_ui()
+        elif self.current_line.monologue is not None:
+            self.player_monologue = Monologue(self.current_line.monologue)
+
+    def _draw_background_character(self, screen):
         pygame.draw.rect(screen, Color("white"), self.dialogue_box_rect, 0, border_radius=self.border_radius)
         pygame.draw.rect(screen, Color("black"), self.dialogue_box_rect, 1, border_radius=self.border_radius)
 
@@ -332,14 +363,24 @@ class Dialogue(Logue):
             pygame.draw.rect(win, Color("red"), self.dialogue_box_rect, 1)
         self.character.draw(win)
         self._draw_background(win)
-        self.text_box.draw(win, self.dialogue_box_rect.topleft)
 
-        if self.current_line is not None and self.current_line.answers is not None:
-            self._draw_answers(win)
+        if self.step == 0:
+            self.character_text_box.draw(win, self.dialogue_box_rect.topleft)
+
+        if self.step == 1:
+            # draw answers / monologue
+            if self.current_line.answers is not None:
+                self._draw_answers(win)
+            elif self.current_line.monologue is not None:
+                self.player_monologue.draw(win)
+        if self.step == 2:
+            self.player_answer.draw(win)
 
     def handle_events(self, events):
         for answer in self.answers_ui:
             answer.handle_events(events)
+        if self.player_monologue is not None:
+            self.player_monologue.handle_events(events)
         for event in events:
             if event.type == KEYDOWN and event.key == K_SPACE:
                 self._handle_space_key()
@@ -347,26 +388,32 @@ class Dialogue(Logue):
                 self._handle_mouse_click(event.pos)
 
     def _handle_space_key(self):
-        print("space")
+        if self.step in (0, 2):
+            self.step += 1
+            self.render_text_boxes()
+
+        # We don't need to wait for answer pressed to go to next line when player has a internal monologue
+        if self.step == 1 and self.current_line.answers is None:
+            self.current_scene.next_event()
+
+        if self.step == 3:
+            self.current_line = self.chosen_answer.line
+            self.step = 0
+            self.chosen_answer = None
+            self.render_text_boxes()
 
     def _handle_mouse_click(self, pos):
         for answerui in self.answers_ui:
             if answerui.is_mouse_on_button(pos):
-                # go to corresponding line
                 for answer in self.current_line.answers:
-                    if answerui.text == answer.text:
+                    if answerui.text == answer.preview:
                         self._handle_answer_click(answer)
+                break
 
     def _handle_answer_click(self, answer):
-        self.current_line = answer.line
-        if self.current_line is not None:
-            self.text_box = MultiTextBox(self.current_line.text, size=self.dialogue_box_rect.size)
-            self.answers_ui = [AnswerUI(e.text) for e in self.current_line.answers]
-            if self.current_line.answers is None:
-                self.current_line = None
-                self.answers_ui = []
+        self.chosen_answer = answer
+        self.player_answer = Monologue(answer.text)
+        self.step = 2
 
-        else:
-            self.current_line = None
-            self.answers_ui = []
-            self.current_scene.next_event()
+    def _init_answers_ui(self):
+        self.answers_ui = [AnswerUI(e.preview) for e in self.current_line.answers]
