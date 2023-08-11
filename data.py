@@ -86,6 +86,34 @@ scenes_data = {
 
                 }
             },
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "So, are you ready to start exploring the school?",
+                        "answers": [
+                            {
+                                "preview": "Sure, lead the way!",
+                                "text": "Sure, lead the way, Midoriya!",
+                                "line": {
+                                    "text": "Great! Let's start with the main building. There's so much to see and learn here at UA. Follow me!",
+                                    "monologue": "Well, it seems like Midoriya knows his way around. I'll follow him for now and see what UA has to offer."
+                                }
+                            },
+                            {
+                                "preview": "I can find my own way around.",
+                                "text": "Thanks for the offer, but I think I can find my way around.",
+                                "line": {
+                                    "text": "Oh, I understand. But I thought I could show you some of the highlights and help you get settled. Just let me know if you change your mind, okay?",
+                                    "monologue": "I can be independent and find my own way, plus I’m not happy being shown around by a student instead of a teacher … Though having someone – anyone show me around might not be the worst idea."
+                                }
+
+                            }
+                        ]
+                    }
+                }
+            }
 
         ],
     },
@@ -94,8 +122,74 @@ scenes_data = {
         "background": "1/entrance01.jpg",
         "escape_points": [
             {
-                "position": (100, 100),
-                "destination": "entrance"
+                "position": (500, 500),
+                "destination": "hallway"
             }],
+        "events": [
+            {
+                "type": "dialogue",
+                "data":
+                    {
+                        "character": "deku_school_uniform",
+                        "line": {
+                            "text": "Here we are, the lockers area. It's where students store their belongings during the day. Feel free to choose an empty locker for yourself.",
+                            "answers": [
+                                {
+                                    "preview": "Can you tell me which ones aren’t taken yet?",
+                                    "text": "Can you tell me which ones aren’t taken yet, Midoriya?",
+                                    "line": {
+                                        "text": "Quite a few of them, actually, but it's usually better to choose a locker closer to your classes. That way, you won't have to rush around between breaks. Let's see if there are any available near your first-period classroom.",
+                                        "monologue": "Midoriya and I look around the lockers and find one available. Number “095” I should remember that. I’ll take the key for now and sort my belongings in on my first school day."
+                                    }
+                                }
+                            ]
+                        }
+                    }
+
+            }
+        ]
+    },
+
+    "hallway": {
+        "background": "1/hallway00.jpg",
+        "escape_points": [
+            {
+                "position": (500, 500),
+                "destination": "study_hall"
+            }
+        ],
+        "events": [
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "This is the main hallway. It's where students gather between classes and during breaks. It's also where you'll find the cafeteria, the library, and the school's main office.",
+                        "answers": [
+                            {
+                                "preview": "I'll make sure to remember that.",
+                                "text": " Thanks, I’ll make sure to remember that!",
+                                "line": {
+                                    "text": " If you have any other questions, feel free to ask.",
+                                }
+                            },
+                            {
+                                "preview": "Do students hang out in the hallways?",
+                                "text": "Do students often hang out in the hallways, Midoriya?",
+                                "line": {
+                                    "text": "The hallways can get quite crowded during breaks, and students chat and catch up with friends. However, it's usually better to find a more comfortable spot, like the stairs with couches or the study hall, if you want to relax or study."
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+    },
+
+    "study_hall": {
+        "background": "1/study00.jpg",
+        "escape_points": [],
+        "events": [],
     },
 }

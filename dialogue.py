@@ -94,6 +94,7 @@ class MultiTextBox:
         cursor = 0
         while cursor < len(words_of_text):
             word = words_of_text[cursor]
+            print(word)
             if word[0] == "\n" and current_height != 0:
                 current_width = 0
                 current_height += self.font.get_height()
@@ -200,7 +201,7 @@ class Monologue(Logue):
 
     def _handle_space_key(self):
         """Handle the space key event."""
-        self.text_box.current_index += 20
+        self.text_box.current_index += 1
         if self.text_box.current_index >= len(self.text_box.surfaces):
             if self.current_scene is not None:
                 self.current_scene.next_event()
