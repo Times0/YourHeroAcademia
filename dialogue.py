@@ -1,6 +1,7 @@
 import logging
 
 import pygame
+import pygame as pg
 from pygame.locals import *
 
 from boring import images
@@ -26,7 +27,7 @@ def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…")):
         return words[:last_punctuation_index + 1], words[last_punctuation_index + 1:]
 
 
-debug = True
+debug = False
 
 
 class TextBox:
@@ -71,6 +72,8 @@ class MultiTextBox:
         self.text_color = text_color
         self.width, self.height = size
         self.position = position
+
+        self.rect = pygame.Rect(position, size)
 
         self.surfaces = []
         self.current_index = 0
@@ -129,24 +132,24 @@ class MultiTextBox:
             word_surface = self.font.render(word + " ", True, Color("Black"))
             surface.blit(word_surface, (x, y))
 
-    def draw(self, win, pos=None):
+    def draw(self, win):
         """Draw the current surface."""
-        if pos is not None:
-            self.position = pos
         if self.requires_render:
             self.render_smart()
             self.requires_render = False
 
-        rect = pygame.Rect(*self.position, self.width, self.height)
         if debug:
-            pygame.draw.rect(win, Color("red"), rect, 1)
-        win.blit(self.surfaces[self.current_index], self.position)
+            pygame.draw.rect(win, Color("red"), self.rect.inflate(-10, -10), 1)
+        win.blit(self.surfaces[self.current_index], self.rect.topleft)
+
+
+MONOLOGUE_COUNTOUR_POS = (150, 500)
+MONOLOGUE_CIRCLE_CENTER = (377, 860)
 
 
 class Logue:
-    def __init__(self, border_radius=15, rect_alpha=200, font=defaul_font, current_scene=None):
+    def __init__(self, border_radius=15, font=defaul_font, current_scene=None):
         self.border_radius = border_radius
-        self.rect_alpha = rect_alpha
         self.font = font
 
         x, y = (587, 769)
@@ -163,7 +166,9 @@ class Logue:
 
     def _draw_background(self, screen):
         """Draws the background for the monologue."""
-        screen.blit(images.text_contour, (150, 500))
+        # Draw character head in the circle
+        screen.blit(images.text_contour, MONOLOGUE_COUNTOUR_POS)
+        screen.blit(images.mc, images.mc.get_rect(center=MONOLOGUE_CIRCLE_CENTER).move(0,-40))
 
 
 monologue_rect = pygame.Rect(606, 788, 1166, 168)
@@ -179,13 +184,13 @@ class Monologue(Logue):
     """
 
     def __init__(self, text: str, character: dict = None, current_scene=None):
-        super().__init__(border_radius=15, rect_alpha=200, font=defaul_font, current_scene=current_scene)
+        super().__init__(border_radius=15, font=defaul_font, current_scene=current_scene)
 
         from scene import Character
         if character is not None:  # If we want to display a character
             self.character = Character(**character, position=(WIDTH / 2, HEIGHT / 2))
 
-        self.text_box = MultiTextBox(text, font=defaul_font, size=monologue_rect.size)
+        self.text_box = MultiTextBox(text, font=defaul_font, position=monologue_rect.topleft, size=monologue_rect.size)
 
     def handle_events(self, events):
         """Handles the events for the monologue."""
@@ -195,17 +200,19 @@ class Monologue(Logue):
 
     def _handle_space_key(self):
         """Handle the space key event."""
-        self.text_box.current_index += 1
+        self.text_box.current_index += 20
         if self.text_box.current_index >= len(self.text_box.surfaces):
             if self.current_scene is not None:
                 self.current_scene.next_event()
 
-    def draw(self, screen):
+    def draw(self, screen, draw_bg=True):
         """Draws the monologue on the screen."""
         if hasattr(self, "character"):
             self.character.draw(screen)
-        self._draw_background(screen)
-        self.text_box.draw(screen, monologue_rect.topleft)
+        if draw_bg:
+            self._draw_background(screen)
+
+        self.text_box.draw(screen)
         self._draw_page_counter(screen)
 
     def _draw_page_counter(self, screen):
@@ -293,34 +300,52 @@ class Clickable:
             self.onclick_f()
 
 
+# Answer UI constants
+BORDER_SIZE = 5
+BORDER_RADIUS = 15
+INFLATE_SIZE = (20, 20)
+TEXT_OFFSET = (10, 10)
+TEXT_Y_OFFSET_MULTIPLIER = 50
+OPTION_OFFSET = 10
+
+
 class AnswerUI(Clickable):
-    def __init__(self, text: str):
+    def __init__(self, text: str, index: int):
         super().__init__(None)
         self.text = text
         self.font = defaul_font
 
-    def draw(self, screen, pos):
-        self.rect = pygame.Rect(pos, (500, 100))
+        self.render = self.font.render(self.text, True, Color("Black"))
+        x, y = TEXTBOX_MONOLOGUE_POS
+        y += index * (TEXT_Y_OFFSET_MULTIPLIER + OPTION_OFFSET)
+        self.rect = self.render.get_rect(topleft=(x, y)).inflate(*INFLATE_SIZE)
+
+    def draw(self, screen):
         surface = pygame.Surface(self.rect.size, pygame.SRCALPHA)
         surface.fill(Color("White"))
-        pygame.draw.rect(surface, Color("Black"), surface.get_rect(), 5, border_radius=15)
+        pygame.draw.rect(surface, Color("Black"), surface.get_rect(), BORDER_SIZE, border_radius=BORDER_RADIUS)
 
         # Draw text
-        text = self.font.render(self.text, True, Color("Black"))
-        text_rect = text.get_rect(center=surface.get_rect().center)
-        surface.blit(text, text_rect)
-
-        screen.blit(surface, pos)
+        surface.blit(self.render, TEXT_OFFSET)
+        screen.blit(surface, self.rect)
 
 
 CHARACTER_POS = (WIDTH / 2, HEIGHT / 2)
+TEXTBOX_MONOLOGUE_POS = monologue_rect.topleft
+
+
+class CharacterTextBox(MultiTextBox):
+    def __init__(self, text, character):
+        w, h = 400, 500
+        x, y = character.rect.move(20, 20).topright
+        self.rect = pygame.Rect(x, y, w, h)
+        super().__init__(text, position=(x, y), size=(w, h))
 
 
 class Dialogue(Logue):
-    def __init__(self, line, character=None, current_scene=None):
-        super().__init__(border_radius=15, rect_alpha=200, font=defaul_font, current_scene=current_scene)
+    def __init__(self, line, character, current_scene=None):
+        super().__init__(border_radius=15, font=defaul_font, current_scene=current_scene)
         self.character = Character(name=character, position=CHARACTER_POS)
-        self.dialogue_box_rect = pygame.Rect(150, 300, 500, 500)
         self.answers_box_rect = monologue_rect
 
         self.whole_interaction: LineOther = LineOther(**line)
@@ -329,7 +354,7 @@ class Dialogue(Logue):
         self.answers_ui = []
         self.chosen_answer: LinePlayer | None = None
 
-        self.character_text_box = None
+        self.character_text_box: CharacterTextBox | None = None
         self.player_answer: Monologue | None = None
         self.player_monologue: Monologue | None = None
 
@@ -340,41 +365,37 @@ class Dialogue(Logue):
     def render_text_boxes(self):
         if self.current_line is None:
             return
-        self.character_text_box = MultiTextBox(self.current_line.text, size=self.dialogue_box_rect.size)
+        self.character_text_box = CharacterTextBox(self.current_line.text, self.character)
         if self.current_line.answers is not None:
             self._init_answers_ui()
         elif self.current_line.monologue is not None:
             self.player_monologue = Monologue(self.current_line.monologue)
 
-    def _draw_background_character(self, screen):
-        pygame.draw.rect(screen, Color("white"), self.dialogue_box_rect, 0, border_radius=self.border_radius)
-        pygame.draw.rect(screen, Color("black"), self.dialogue_box_rect, 1, border_radius=self.border_radius)
-
     def _draw_answers(self, screen):
-
-        start_y = 700
-        x = 700
-        for i, answer in enumerate(self.answers_ui):
-            pos = x, start_y + i * 100
-            answer.draw(screen, pos)
+        for answer in self.answers_ui:
+            answer.draw(screen)
 
     def draw(self, win):
-        if debug:
-            pygame.draw.rect(win, Color("red"), self.dialogue_box_rect, 1)
         self.character.draw(win)
+
         self._draw_background(win)
 
-        if self.step == 0:
-            self.character_text_box.draw(win, self.dialogue_box_rect.topleft)
+        if self.step in (0, 1):
+            draw_transparent_rect_with_border_radius(win,
+                                                     self.character_text_box.rect.inflate(15, 15), 15,
+                                                     Color("white"), alpha=200)
+            pygame.draw.rect(win, Color("Black"), self.character_text_box.rect.inflate(15, 15), 5, border_radius=15)
+
+            self.character_text_box.draw(win)
 
         if self.step == 1:
             # draw answers / monologue
             if self.current_line.answers is not None:
                 self._draw_answers(win)
             elif self.current_line.monologue is not None:
-                self.player_monologue.draw(win)
+                self.player_monologue.draw(win, draw_bg=False)  # already drawn
         if self.step == 2:
-            self.player_answer.draw(win)
+            self.player_answer.draw(win, draw_bg=False)
 
     def handle_events(self, events):
         for answer in self.answers_ui:
@@ -388,14 +409,11 @@ class Dialogue(Logue):
                 self._handle_mouse_click(event.pos)
 
     def _handle_space_key(self):
+        if self.step == 1 and self.current_line.answers is None:
+            self.current_scene.next_event()
         if self.step in (0, 2):
             self.step += 1
             self.render_text_boxes()
-
-        # We don't need to wait for answer pressed to go to next line when player has a internal monologue
-        if self.step == 1 and self.current_line.answers is None:
-            self.current_scene.next_event()
-
         if self.step == 3:
             self.current_line = self.chosen_answer.line
             self.step = 0
@@ -405,6 +423,7 @@ class Dialogue(Logue):
     def _handle_mouse_click(self, pos):
         for answerui in self.answers_ui:
             if answerui.is_mouse_on_button(pos):
+                print("clicked")
                 for answer in self.current_line.answers:
                     if answerui.text == answer.preview:
                         self._handle_answer_click(answer)
@@ -416,4 +435,11 @@ class Dialogue(Logue):
         self.step = 2
 
     def _init_answers_ui(self):
-        self.answers_ui = [AnswerUI(e.preview) for e in self.current_line.answers]
+        self.answers_ui = [AnswerUI(e.preview, i) for i, e in enumerate(self.current_line.answers)]
+
+
+def draw_transparent_rect_with_border_radius(screen, rect, border_radius, color, alpha):
+    surf = pg.Surface(rect.size, pg.SRCALPHA)
+    pg.draw.rect(surf, color, surf.get_rect().inflate(-1, -1), border_radius=border_radius)
+    surf.set_alpha(alpha)
+    screen.blit(surf, rect)

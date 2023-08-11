@@ -67,3 +67,5 @@ class CharacterImageLoader:
 
 
 loader = CharacterImageLoader()
+
+mc = load("main_character/blank_female.png", scale=1.2)

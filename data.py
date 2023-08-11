@@ -46,15 +46,12 @@ scenes_data = {
                 "type": "monologue",
                 "data": {
                     "text": first_monologue,
-                    "character": {
-                        "name": "enji_casual",
-                    }
                 }
             },
             {
                 "type": "dialogue",
                 "data": {
-                    "character": "katsuki_casual",
+                    "character": "deku_school_uniform",
                     "line": {
                         "text": "Hey there! Are you the new transfer student, by any chance?",
                         "answers": [
