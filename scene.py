@@ -133,7 +133,7 @@ class EscapePoint(Clickable):
         self.game_engine.change_scene_to(self.destination)
 
     def draw_tooltip(self, screen):
-        text_surface = render_glow(self.destination, font_tooltip, pygame.Color("White"), pygame.Color("Black"))
+        text_surface = render_glow(self.destination, font_tooltip, pygame.Color("White"), pygame.Color("Black")  )
         text_rect = text_surface.get_rect(center=self.position)
         text_rect.y -= 50
         screen.blit(text_surface, text_rect)
