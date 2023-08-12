@@ -78,7 +78,6 @@ from boring.fonts import get_font
 
 font_tooltip = get_font("animeace.ttf", 32)
 
-
 class EscapePoint(Clickable):
     def __init__(self, position: Tuple[int, int], destination: str, game_engine):
         super().__init__(self.go_to_next_scene)

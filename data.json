@@ -1,0 +1,529 @@
+{
+  "void": {
+    "background": "1/void.jpg",
+    "escape_points": []
+  },
+  "entrance": {
+    "background": "1/entrance00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          686,
+          417
+        ],
+        "destination": "lockers"
+      }
+    ],
+    "events": [
+      {
+        "type": "monologue",
+        "data": {
+          "text": "As I step into UA, I'm greeted by a bustling entrance hall teeming with students. I must admit: With all of my bags and without the official school uniform I feel a bit out of place. A few students look a bit confused, some are whispering and pointing at me. Understandable, I don\u2019t really look like a student here and during the last semester following a villain attack on one of the hero classes the school was rumored to invest a lot into their security system. On the one side that\u2019s amazing, because the hero classes got to move into dorm rooms on the school ground. Free housing! How amazing is that?! In the boarding school I attended the last 6 months I had to pay several hundred Dollars. On the other hand \u2026 Well I feel even more out of place than I would anyway. \nAs I fumble through my bags, searching for the acceptance letter I received from UA, I can't help but reflect on how I ended up joining this prestigious school in the second semester. During the first semester, I was dealing with some personal challenges that prevented me from applying on time. It was a difficult period, and I felt unsure about my future as a hero. However, fate seemed to have other plans for me.\n\nOne day, as I was visiting a local hero agency in my hometown, I happened to cross paths with a UA hero who was on a mission in the area. They noticed my potential and saw something in me that I couldn't see in myself at that time. After a brief conversation, they learned about my situation and offered to recommend me for a late acceptance to UA.\n\nThe hero's recommendation carried considerable weight, and the UA administration, understanding the circumstances and recognizing my potential, decided to make an exception and offer me a spot in the second semester. It was a rare and fortunate opportunity, and I couldn't be more grateful for the hero's intervention that changed the course of my life.\n\n\u201c[Player's Name],\n\nWe are pleased to inform you that you have been accepted to attend the prestigious U.A. High School, starting from the second semester. Your unique qualities and potential as a hero have not gone unnoticed, and we believe you have the talent to become an outstanding hero in the future.\n\nEnclosed with this letter, you will find all the necessary details for your enrollment at U.A. High School. Please take the time to review the information carefully, as it contains important instructions for your smooth transition into our educational program.\n\nAs a late addition, we understand that you might be joining an established class. However, we have full confidence that you will integrate well with your fellow students and thrive in our nurturing environment.\n\nYour journey at U.A. High School will be filled with challenges, growth, and opportunities to showcase your unique abilities. We aim to provide you with the best education and support to help you reach your full potential as a hero.\n\nUpon your arrival, please report to the school's main entrance, where our faculty and staff will be eagerly awaiting your arrival. Feel free to reach out to the school administration if you have any questions or require any assistance before your first day.\n\nCongratulations once again on your acceptance to U.A. High School. We look forward to welcoming you into our heroic community and witnessing the great impact you will undoubtedly make.\n\nSincerely,\n\nPrincipal Nezu\nU.A. High School\u201d\n\nAs I look around, I spot a green haired boy approaching me. He seems friendly enough, flashing a warm smile my way.\n"
+        }
+      },
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "Hey there! Are you the new transfer student, by any chance?",
+            "answers": [
+              {
+                "preview": "Yes, I am!",
+                "text": "Yes, I am! I just arrived here!",
+                "line": {
+                  "text": "I thought so, nice to meet you!",
+                  "answers": [
+                    {
+                      "preview": "Who are you?",
+                      "text": "Who are you? Shouldn't a teacher be showing me around?",
+                      "line": {
+                        "text": "Oh, I apologize if I gave off the wrong impression. I'm actually a student here, just like you. My name is Midoriya Izuku. I was asked to help you settle in. UA has a student support system, you see!",
+                        "monologue": "So, this guy is a student? He seems nice enough, but I was expecting a teacher. Then again, at such a renowned school the teachers must be really busy all the time \u2026 I guess I'll have to make the best of it"
+                      }
+                    },
+                    {
+                      "preview": "Nice to meet you.",
+                      "text": "Nice to meet you. I'm the new transfer student. My name is [player's name].",
+                      "line": {
+                        "text": "Pleasure to meet you, [player's name]! I'm Midoriya Izuku, and I'll be your guide around UA. I'm here to help you settle in and answer any questions you may have.",
+                        "monologue": "He seems friendly enough, even if I was expecting a teacher. I'll try to make the most of this situation."
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "So, are you ready to start exploring the school? So, are you ready to start exploring the school?",
+            "answers": [
+              {
+                "preview": "Sure, lead the way!",
+                "text": "Sure, lead the way, Midoriya!",
+                "line": {
+                  "text": "Great! Let's start with the main building. There's so much to see and learn here at UA. Follow me!",
+                  "monologue": "Well, it seems like Midoriya knows his way around. I'll follow him for now and see what UA has to offer."
+                }
+              },
+              {
+                "preview": "I can find my own way around.",
+                "text": "Thanks for the offer, but I think I can find my way around.",
+                "line": {
+                  "text": "Oh, I understand. But I thought I could show you some of the highlights and help you get settled. Just let me know if you change your mind, okay?",
+                  "monologue": "I can be independent and find my own way, plus I\u2019m not happy being shown around by a student instead of a teacher \u2026 Though having someone \u2013 anyone show me around might not be the worst idea."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "lockers": {
+    "background": "1/entrance01.jpg",
+    "escape_points": [
+      {
+        "position": [
+          1770,
+          419
+        ],
+        "destination": "hallway"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "Here we are, the lockers area. It's where students store their belongings during the day. Feel free to choose an empty locker for yourself.",
+            "answers": [
+              {
+                "preview": "Can you tell me which ones aren\u2019t taken yet?",
+                "text": "Can you tell me which ones aren\u2019t taken yet, Midoriya?",
+                "line": {
+                  "text": "Quite a few of them, actually, but it's usually better to choose a locker closer to your classes. That way, you won't have to rush around between breaks. Let's see if there are any available near your first-period classroom.",
+                  "monologue": "Midoriya and I look around the lockers and find one available. Number \u201c095\u201d I should remember that. I\u2019ll take the key for now and sort my belongings in on my first school day."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "hallway": {
+    "background": "1/hallway00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "study_hall"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the main hallway. It's where students gather between classes and during breaks. It's also where you'll find the cafeteria, the library, and the school's main office.",
+            "answers": [
+              {
+                "preview": "I'll make sure to remember that.",
+                "text": "Thanks, I\u2019ll make sure to remember that!",
+                "line": {
+                  "text": "If you have any other questions, feel free to ask."
+                }
+              },
+              {
+                "preview": "Do students hang out in the hallways?",
+                "text": "Do students often hang out in the hallways, Midoriya?",
+                "line": {
+                  "text": "The hallways can get quite crowded during breaks, and students chat and catch up with friends. However, it's usually better to find a more comfortable spot, like the stairs with couches or the study hall, if you want to relax or study."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "study_hall": {
+    "background": "1/study00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          307,
+          258
+        ],
+        "destination": "library"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the study hall, a peaceful area where students can focus on their studies. It's a great place if you need some quiet time or want to complete your assignments.",
+            "answers": [
+              {
+                "preview": "What a serene atmosphere!",
+                "text": "I appreciate the serene atmosphere here. It's perfect for concentrating on my studies.",
+                "line": {
+                  "text": "Absolutely! It's one of the few places where you can escape the noise and distractions. If you ever need assistance with your studies, there are usually students willing to help out.",
+                  "monologue": "The study hall seems like a peaceful spot. It'll be useful for those times when I need to focus and get some work done."
+                }
+              },
+              {
+                "preview": "Do students help each other here?",
+                "text": "Do students often help each other out in the study hall, Midoriya?",
+                "line": {
+                  "text": "Definitely! Many students are willing to assist their classmates with difficult subjects or provide study tips. It's a collaborative environment where we all strive to excel together.",
+                  "monologue": "It's nice to know that students here support each other academically. I might reach out for help if I ever struggle with a subject."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "library": {
+    "background": "1/library00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          600
+        ],
+        "destination": "toilets"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "Welcome to the library! It's a treasure trove of knowledge, and you'll find all sorts of books and references here. Feel free to explore and make use of the study areas.",
+            "answers": [
+              {
+                "preview": "I love libraries.",
+                "text": "I love libraries. They're my favorite place to escape into the world of books. My old school didn\u2019t have one, unfortunately.",
+                "line": {
+                  "text": "I completely understand! Libraries have a unique charm. You'll find plenty of inspiration and information within these walls.",
+                  "monologue": "The library is going to be one of my favorite spots in UA. I can't wait to dive into the books and discover new stories."
+                }
+              },
+              {
+                "preview": "Are there any special library rules?",
+                "text": "Are there any special rules or guidelines I should know about when using the library, Midoriya?",
+                "line": {
+                  "text": "The library staff appreciates a quiet and respectful environment. Make sure to keep noise to a minimum and return borrowed books on time. Other than that, feel free to make yourself comfortable and explore the vast collection.",
+                  "monologue": "It's essential to be mindful of the library's rules and respect the space. I'll make sure to follow them and make the most of my time here."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "infirmairy": {
+    "background": "1/infirmairy00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "toilets"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "Here's the infirmary, a place where you can receive medical attention if needed. Our school nurse, Recovery Girl, takes good care of us.",
+            "answers": [
+              {
+                "preview": "I hope I never have to visit here.",
+                "text": "I hope I never have to visit the infirmary. It's always better to stay healthy.",
+                "line": {
+                  "text": " That's true, but accidents happen, and it's comforting to know we have a capable nurse here. Hopefully, you won't need to visit, though!"
+                }
+              },
+              {
+                "preview": "Is Recovery Girl nice?",
+                "text": "Is Recovery Girl a friendly nurse? I hope she's nice.",
+                "line": {
+                  "text": "Recovery Girl is amazing! She may look strict, but she genuinely cares for us. Her Quirk allows her to heal injuries quickly. You'll feel safe in her hands."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "toilets": {
+    "background": "1/bathroom00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "basketball_court"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "These are the school toilets, a basic necessity. Make sure to keep them clean and respect the privacy of others.",
+            "answers": [
+              {
+                "preview": "Thanks for pointing out the obvious.",
+                "text": "Thanks for pointing out the obvious, Midoriya. I'm familiar with how toilets work.",
+                "line": {
+                  "text": "I\u2019m sorry if it seemed unnecessary. It's just part of the tour. Let's move on to the next location.",
+                  "monologue": "I appreciate Midoriya's effort to show me around, but I didn't really need a detailed introduction to the toilets."
+                }
+              },
+              {
+                "preview": "Are they usually well-maintained?",
+                "text": "Are the school toilets usually well-maintained, Midoriya?",
+                "line": {
+                  "text": "Yes, the school staff ensures they're clean and hygienic. We all have a responsibility to keep them that way. If you notice any issues, report them to the faculty.",
+                  "monologue": "Well, even the school toilets are essential, I guess. I can't help but chuckle at how he's thorough in showing me everything."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "basketball_court": {
+    "background": "1/basketball_court00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "couch_room"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the basketball court, a popular spot for students who enjoy sports and friendly competition. It's a great place to release some energy.",
+            "answers": [
+              {
+                "preview": "I'm not really into sports.",
+                "text": "I'm not really into sports, but I can appreciate the enthusiasm of those who are.",
+                "line": {
+                  "text": "Oh really? Hmm okay then.",
+                  "monologue": "Damn, maybe I shouldn’t have said that … I’m joining the hero course after all …"
+                }
+              },
+              {
+                "preview": "Do students organize games here?",
+                "text": "Do students often organize games or competitions here on the basketball court, Midoriya?",
+                "line": {
+                  "text": "Absolutely! It's a hub for friendly games and tournaments. You'll find students engaging in basketball matches and showcasing their Quirks in creative ways. It's a fantastic display of talent and teamwork.",
+                  "monologue": "The basketball court seems like a vibrant space for students to showcase their skills and bond over sports. It could be an opportunity to witness some extraordinary Quirks in action."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "couch_room": {
+    "background": "2/couch_room00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "art_room"
+      }
+    ],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "These couches are a popular spot for students to take a break, chat with friends, or catch up on some studying. It's a cozy and comfortable area.",
+            "answers": [
+              {
+                "preview": "I could use a break.",
+                "text": "I could definitely use a break. These couches look comfy, and it's nice to have a space to relax in the middle of the school.",
+                "line": {
+                  "text": "Absolutely! It's a great place to unwind and recharge. Feel free to take a seat whenever you need a break from classes or just want to socialize.",
+                  "monologue": "The stairs with couches offer a much-needed respite from the hustle and bustle of the school. It's important to take breaks and recharge to stay focused."
+                }
+              },
+              {
+                "preview": "Is it always this crowded?",
+                "text": "Is it always this crowded around the couches, Midoriya? It seems like a popular spot.",
+                "line": {
+                  "text": "It can get quite crowded at times, especially during breaks between classes. But don't worry, you'll always find a spot to relax. The school is big enough to accommodate everyone."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "art_room": {
+    "background": "2/art_room00.jpg",
+    "escape_points": [],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the art classroom, where students can unleash their creativity and explore different art forms.",
+            "answers": [
+              {
+                "preview": "I'm not really into art.",
+                "text": "I'm not really into art, but I can appreciate the talent and effort that goes into it.",
+                "line": {
+                  "text": "That's alright! Not everyone is drawn to art. But who knows, maybe you'll discover a hidden talent or find something that piques your interest while you're here."
+                }
+              },
+              {
+                "preview": "Are there any famous artworks created by students?",
+                "text": "Are there any famous artworks created by students here? I'd love to see what the talented artists have produced.",
+                "line": {
+                  "text": "Absolutely! Our students have created some incredible artworks that have gained recognition both within and outside the school. The art teachers often showcase outstanding pieces by hanging them in the entrance of our cafeteria!"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "music_classroom": {
+    "background": "1/music_classroom00.jpg",
+    "escape_points": [],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the music classroom, where students can explore their musical talents and learn to create beautiful melodies.",
+            "answers": [
+              {
+                "preview": "I've always wanted to learn an instrument.",
+                "text": "I've always wanted to learn to play an instrument. Maybe being here will provide an opportunity to pursue that interest.",
+                "line": {
+                  "text": "That's fantastic! The music classroom offers a range of instruments for students to learn and practice. It's never too late to start, and who knows, you might discover a hidden musical talent."
+                }
+              },
+              {
+                "preview": "Is there a school band or choir?",
+                "text": "Is there a school band or choir here? I've always loved singing and playing music with others.",
+                "line": {
+                  "text": "Oh hmmm I’m not sure … I’d have to ask that myself.",
+                  "monologue": "That’s okay. Don’t worry about it!"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "main_and_regular_classrooms": {
+    "background": "1/main_and_regular_classrooms00.jpg",
+    "escape_points": [],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "These are the classrooms where students attend their academic courses. It's where we learn and grow as future heroes.",
+            "answers": [
+              {
+                "preview": "I hope the classes aren't too challenging.",
+                "text": "I hope the classes here aren't too challenging. I want to excel, but I also don't want to feel overwhelmed.",
+                "line": {
+                  "text": "The classes can be demanding, but the teachers are excellent at providing guidance and support. It's a chance for us to push ourselves and develop our abilities. Don't worry; you'll find your rhythm."
+                }
+              },
+              {
+                "preview": "Are there any standout subjects or teachers?",
+                "text": "Are there any subjects or teachers here that are known for being particularly exceptional?",
+                "line": {
+                  "text": "Absolutely! We have outstanding teachers in various subjects. Each teacher brings their unique approach and expertise, making the learning experience engaging and enriching. There are also standout subjects like Hero Studies and Quirk Development."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "teachers_office": {
+    "background": "1/teachers_office00.jpg",
+    "escape_points": [],
+    "events": [
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "This is the teachers' office, where our dedicated faculty members work. They are always available to assist students and provide guidance.",
+            "answers": [
+              {
+                "preview": "Are the teachers strict?",
+                "text": "Are the teachers here strict, Midoriya? I hope they're not too intimidating.",
+                "line": {
+                  "text": "Well, some teachers have a stern exterior, but they genuinely care about our growth and development. They have high expectations for us, but they're also understanding and supportive."
+                }
+              },
+              {
+                "preview": "I hope they're approachable.",
+                "text": "I hope the teachers here are approachable. It's important to feel comfortable seeking their guidance and assistance.",
+                "line": {
+                  "text": "Don't worry, they are! The teachers are friendly and approachable. They're here to support us and ensure we receive the best education possible. You can always approach them with any concerns or questions."
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
