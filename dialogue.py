@@ -52,7 +52,7 @@ class TextBox:
                 current_width = 0
                 current_height += self.font.get_height()
                 continue
-            word_surface = self.font.render(word, True, self.color)
+            word_surface = self.font.render_glow(word, True, self.color)
             word_width, word_height = word_surface.get_size()
             if current_width + word_width > self.width:
                 current_width = 0
@@ -107,7 +107,7 @@ class MultiTextBox:
             # remove \n from the word
             word = word.replace("\n", "")
 
-            word_surface = self.font.render(word + " ", True, self.text_color)  # Fake render to get the size
+            word_surface = self.font.render_glow(word + " ", True, self.text_color)  # Fake render to get the size
             word_width, word_height = word_surface.get_size()
 
             if current_width + word_width > max_width:
@@ -136,7 +136,7 @@ class MultiTextBox:
     def _render_words(self, words, surface):
         """Render the words on the surface."""
         for word, (x, y) in words:
-            word_surface = self.font.render(word + " ", True, Color("Black"))
+            word_surface = self.font.render_glow(word + " ", True, Color("Black"))
             surface.blit(word_surface, (x, y))
 
     def draw(self, win):
@@ -191,7 +191,7 @@ counter_font = get_font("animeace.ttf", 40)
 MONOLOGUE_TEXT_RECT = pygame.Rect(590, 770, 1166, 180)
 PAGE_COUNTER_POS = (1693, 706)
 MONOLOGUE_COUNTOUR_POS = (150, 500)
-MONOLOGUE_CIRCLE_CENTER = (377, 860)
+MONOLOGUE_CIRCLE_CENTER = (377, 880)
 
 
 class Monologue(Logue):
@@ -242,8 +242,8 @@ class Monologue(Logue):
 
     def _draw_page_counter(self, screen):
         """Draws the page counter on the screen."""
-        page_counter = counter_font.render(
-            f"{self.text_box.current_index + 1}/{len(self.text_box.surfaces)}", True, Color("Black"))
+        page_counter = counter_font.render_glow(f"{self.text_box.current_index + 1}/{len(self.text_box.surfaces)}",
+                                                True, Color("Black"))
         screen.blit(page_counter, page_counter.get_rect(center=PAGE_COUNTER_POS))
 
 
@@ -340,7 +340,7 @@ class AnswerUI(Clickable):
         self.text = text
         self.font = defaul_font
 
-        self.render = self.font.render(self.text, True, Color("Black"))
+        self.render = self.font.render_glow(self.text, True, Color("Black"))
         x, y = TEXTBOX_MONOLOGUE_POS
         y += index * (TEXT_Y_OFFSET_MULTIPLIER + OPTION_OFFSET)
         self.rect = self.render.get_rect(topleft=(x, y)).inflate(*INFLATE_SIZE)
@@ -427,8 +427,6 @@ class Dialogue(Logue):
             # draw answers
             self._draw_answers(win)
         elif self.step == 2:
-            print(
-                f"Drawing monologue: {self.player_monologue.text_box.surfaces, self.player_monologue.text_box.current_index}")
             self.player_monologue.draw(win, draw_bg=False)  # already drawn
         elif self.step == 3:
             self.player_answer.draw(win, draw_bg=False)
@@ -455,7 +453,8 @@ class Dialogue(Logue):
             pass
 
     def next_step(self):
-        print(f"Old step: {self.step}", end=" ")
+        if debug:
+            print(f"Old step: {self.step}", end=" ")
         if self.step == 0:
             if self.current_line.answers is not None:
                 self.step = 1
@@ -475,6 +474,7 @@ class Dialogue(Logue):
         elif self.step == 3:  # player answered
             if self.chosen_answer.line is None:
                 # End of dialogue
+                print(f"End of dialogue bc {self.chosen_answer.preview} does not have a line")
                 self.current_line = None
                 self.current_scene.next_event()
                 return
@@ -483,7 +483,8 @@ class Dialogue(Logue):
             self.chosen_answer = None
 
         self.render_text_boxes()
-        print(f"-> New step : {self.step}")
+        if debug:
+            print(f"-> New step : {self.step}")
 
     def _handle_space_key(self):
         if self.step == 0:
@@ -508,11 +509,14 @@ class Dialogue(Logue):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 for answer in self.answers_ui:
-                    for a in self.current_line.answers:
-                        if a.preview == answer.text:
-                            self._handle_answer_click(a)
+                    if answer.rect.collidepoint(event.pos):
+                        for a in self.current_line.answers:
+                            if a.preview == answer.text:
+                                self._handle_answer_click(a)
+                                return
 
     def _handle_answer_click(self, answer):
+        print(f"Chosen answer: {answer.preview}")
         self.chosen_answer = answer
         self.player_answer = Monologue(answer.text)
         self.next_step()

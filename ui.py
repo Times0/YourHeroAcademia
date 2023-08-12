@@ -1,4 +1,6 @@
 import pygame
+
+
 class Clickable:
     def __init__(self, onclick_f):
         self.is_hover = False
@@ -10,14 +12,18 @@ class Clickable:
         self.h = 0
         self.rect = pygame.Rect(self.x, self.y, self.w, self.h)
 
+        self.show_tooltip = False
+
     def is_mouse_on_button(self, pos):
         return self.rect.collidepoint(pos)
 
     def on_hover(self):
         pygame.mouse.set_system_cursor(pygame.SYSTEM_CURSOR_HAND)
+        self.show_tooltip = True
 
     def on_unhover(self):
         pygame.mouse.set_system_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        self.show_tooltip = False
 
     def handle_events(self, events):
         for event in events:

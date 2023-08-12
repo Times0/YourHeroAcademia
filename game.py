@@ -4,6 +4,7 @@ import pygame.sprite
 from PygameUIKit import Group
 from PygameUIKit.button import ButtonPngIcon
 
+import data
 from boring import config
 from boring import images
 from boring.config import Color
@@ -13,6 +14,8 @@ logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode="w",
                     format="%(asctime)s - %(levelname)s - %(message)s", datefmt=" %M:%S")
 
 logger = logging.getLogger(__name__)
+
+EDITOR = True
 
 
 class Game:
@@ -46,14 +49,23 @@ class Game:
         for event in events:
             if event.type == pygame.QUIT:
                 self.game_is_on = False
-            # print click pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print(event.pos)
+                if EDITOR:
+                    if event.button == 2:
+                        print(f"Adding point")
+                        d = data.scenes_data.copy()
+                        d[self.engine.current_scene.name]["escape_points"].append(
+                            {"position": event.pos, "destination": "<scene_name>"})
+                        # dump data into data.json
+                        import json
+                        with open("data.json", "w") as f:
+                            json.dump(d, f, indent=4)
 
     def draw(self, win):
         win.fill(Color("Black"))
         self.engine.draw(win)
-        self.btn_quit.draw(win, *self.btn_quit.image.get_rect(topright=(config.WIDTH-15, 15)).topleft)
+        self.btn_quit.draw(win, *self.btn_quit.image.get_rect(topright=(config.WIDTH - 15, 15)).topleft)
         pygame.display.flip()
 
     def quit(self):
