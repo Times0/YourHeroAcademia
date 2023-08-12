@@ -91,7 +91,7 @@ scenes_data = {
                 "data": {
                     "character": "deku_school_uniform",
                     "line": {
-                        "text": "So, are you ready to start exploring the school?",
+                        "text": "So, are you ready to start exploring the school? So, are you ready to start exploring the school?",
                         "answers": [
                             {
                                 "preview": "Sure, lead the way!",
@@ -168,9 +168,9 @@ scenes_data = {
                         "answers": [
                             {
                                 "preview": "I'll make sure to remember that.",
-                                "text": " Thanks, I’ll make sure to remember that!",
+                                "text": "Thanks, I’ll make sure to remember that!",
                                 "line": {
-                                    "text": " If you have any other questions, feel free to ask.",
+                                    "text": "If you have any other questions, feel free to ask.",
                                 }
                             },
                             {
@@ -190,6 +190,141 @@ scenes_data = {
     "study_hall": {
         "background": "1/study00.jpg",
         "escape_points": [],
-        "events": [],
+        "events": [
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "This is the study hall, a peaceful area where students can focus on their studies. It's a great place if you need some quiet time or want to complete your assignments.",
+                        "answers": [
+                            {
+                                "preview": "What a serene atmosphere!",
+                                "text": "I appreciate the serene atmosphere here. It's perfect for concentrating on my studies.",
+                                "line": {
+                                    "text": "Absolutely! It's one of the few places where you can escape the noise and distractions. If you ever need assistance with your studies, there are usually students willing to help out.",
+                                    "monologue": "The study hall seems like a peaceful spot. It'll be useful for those times when I need to focus and get some work done."
+                                }
+                            },
+                            {
+                                "preview": "Do students help each other here?",
+                                "text": "Do students often help each other out in the study hall, Midoriya?",
+                                "line": {
+                                    "text": "Definitely! Many students are willing to assist their classmates with difficult subjects or provide study tips. It's a collaborative environment where we all strive to excel together.",
+                                    "monologue": "It's nice to know that students here support each other academically. I might reach out for help if I ever struggle with a subject."
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
     },
+
+    "library": {
+        "background": "1/library00.jpg",
+        "escape_points": [],
+        "events": [
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "Welcome to the library! It's a treasure trove of knowledge, and you'll find all sorts of books and references here. Feel free to explore and make use of the study areas.",
+                        "answers": [
+                            {
+                                "preview": "I love libraries.",
+                                "text": "I love libraries. They're my favorite place to escape into the world of books. My old school didn’t have one, unfortunately.",
+                                "line": {
+                                    "text": "I completely understand! Libraries have a unique charm. You'll find plenty of inspiration and information within these walls.",
+                                    "monologue": "The library is going to be one of my favorite spots in UA. I can't wait to dive into the books and discover new stories."
+                                }
+                            },
+                            {
+                                "preview": "Are there any special library rules?",
+                                "text": "Are there any special rules or guidelines I should know about when using the library, Midoriya?",
+                                "line": {
+                                    "text": "The library staff appreciates a quiet and respectful environment. Make sure to keep noise to a minimum and return borrowed books on time. Other than that, feel free to make yourself comfortable and explore the vast collection.",
+                                    "monologue": "It's essential to be mindful of the library's rules and respect the space. I'll make sure to follow them and make the most of my time here."
+
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+
+    "infirmairy": {
+        "background": "1/infirmairy00.jpg",
+        "escape_points": [],
+        "events": [
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "Here's the infirmary, a place where you can receive medical attention if needed. Our school nurse, Recovery Girl, takes good care of us.",
+                        "answers": [
+                            {
+                                "preview": "I hope I never have to visit here.",
+                                "text": "I hope I never have to visit the infirmary. It's always better to stay healthy.",
+                                "line": {
+                                    "text": " That's true, but accidents happen, and it's comforting to know we have a capable nurse here. Hopefully, you won't need to visit, though!"
+                                }
+                            },
+                            {
+                                "preview": "Is Recovery Girl nice?",
+                                "text": "Is Recovery Girl a friendly nurse? I hope she's nice.",
+                                "line": {
+                                    "text": "Recovery Girl is amazing! She may look strict, but she genuinely cares for us. Her Quirk allows her to heal injuries quickly. You'll feel safe in her hands.",
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+
+    "toilets": {
+        "background": "1/toilets00.jpg",
+        "escape_points": [],
+        "events": [
+            {
+                "type": "dialogue",
+                "data": {
+                    "character": "deku_school_uniform",
+                    "line": {
+                        "text": "These are the school toilets, a basic necessity. Make sure to keep them clean and respect the privacy of others.",
+                        "answers": [
+                            {
+                                "preview": "Thanks for pointing out the obvious.",
+                                "text": "Thanks for pointing out the obvious, Midoriya. I'm familiar with how toilets work.",
+                                "line": {
+                                    "text": "I’m sorry if it seemed unnecessary. It's just part of the tour. Let's move on to the next location.",
+                                    "monologue": "I appreciate Midoriya's effort to show me around, but I didn't really need a detailed introduction to the toilets."
+                                }
+                            },
+                            {
+                                "preview": "Are they usually well-maintained?",
+                                "text": "Are the school toilets usually well-maintained, Midoriya?",
+                                "line": {
+                                    "text": "Yes, the school staff ensures they're clean and hygienic. We all have a responsibility to keep them that way. If you notice any issues, report them to the faculty.",
+                                    "monologue": "Well, even the school toilets are essential, I guess. I can't help but chuckle at how he's thorough in showing me everything."
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+
+    "basketball_court": {
+        "background": "1/basketball_court00.jpg",
+        "escape_points": [],
+        "events": []
+    }
 }

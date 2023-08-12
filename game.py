@@ -9,7 +9,8 @@ from boring import images
 from boring.config import Color
 from engine import GameEngine
 
-logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode="w")
+logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode="w",
+                    format="%(asctime)s - %(levelname)s - %(message)s", datefmt=" %M:%S")
 
 logger = logging.getLogger(__name__)
 
