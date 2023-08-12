@@ -76,6 +76,7 @@ class MultiTextBox:
         self.rect = pygame.Rect(position, size)
 
         self.surfaces = []
+        self.texts_heights = []
         self.current_index = 0
 
         self.render_smart()
@@ -88,7 +89,7 @@ class MultiTextBox:
         """
         max_width, max_height = self.width, self.height
         words_of_text = self.text.split(" ")
-        current_width = current_height = 0
+        current_width = current_height = word_height = 0
         current_surface = pygame.Surface((max_width, max_height), SRCALPHA)
         words = []
         cursor = 0
@@ -112,6 +113,7 @@ class MultiTextBox:
             if current_height + word_height > max_height:
                 full_sentence, reste = cut_unfinished_sentence(words)
                 self._render_words(full_sentence, current_surface)
+                self.texts_heights.append(current_height + word_height)
                 self.surfaces.append(current_surface)
                 current_surface = pygame.Surface((max_width, max_height), SRCALPHA)
                 current_width = 0
@@ -123,7 +125,7 @@ class MultiTextBox:
             words.append((word, (current_width, current_height)))
             current_width += word_width
             cursor += 1
-
+        self.texts_heights.append(current_height + word_height)
         self._render_words(words, current_surface)
         self.surfaces.append(current_surface)
 
@@ -142,6 +144,9 @@ class MultiTextBox:
         if debug:
             pygame.draw.rect(win, Color("red"), self.rect.inflate(-10, -10), 1)
         win.blit(self.surfaces[self.current_index], self.rect.topleft)
+
+    def get_current_text_height(self):
+        return self.texts_heights[self.current_index]
 
 
 MONOLOGUE_COUNTOUR_POS = (150, 500)
@@ -169,7 +174,7 @@ class Logue:
         """Draws the background for the monologue."""
         # Draw character head in the circle
         screen.blit(images.text_contour, MONOLOGUE_COUNTOUR_POS)
-        screen.blit(images.mc, images.mc.get_rect(center=MONOLOGUE_CIRCLE_CENTER).move(0,-40))
+        screen.blit(images.mc, images.mc.get_rect(center=MONOLOGUE_CIRCLE_CENTER).move(0, -40))
 
 
 monologue_rect = pygame.Rect(606, 788, 1166, 168)
@@ -343,6 +348,9 @@ class CharacterTextBox(MultiTextBox):
         super().__init__(text, position=(x, y), size=(w, h))
 
 
+CHARACTER_TEXT_INFLATE = (20, 20)
+
+
 class Dialogue(Logue):
     def __init__(self, line, character, current_scene=None):
         super().__init__(border_radius=15, font=defaul_font, current_scene=current_scene)
@@ -376,18 +384,24 @@ class Dialogue(Logue):
         for answer in self.answers_ui:
             answer.draw(screen)
 
+    def _draw_character_text(self, screen):
+        text_height = self.character_text_box.get_current_text_height()
+
+        rect = self.character_text_box.rect.copy()
+        rect.height = text_height
+        rect = rect.inflate(CHARACTER_TEXT_INFLATE)
+
+        draw_transparent_rect_with_border_radius(screen, rect, 15, Color("white"), alpha=200)
+        pygame.draw.rect(screen, Color("Black"), rect, 5, border_radius=15)
+        self.character_text_box.draw(screen)
+
     def draw(self, win):
         self.character.draw(win)
 
         self._draw_background(win)
 
         if self.step in (0, 1):
-            draw_transparent_rect_with_border_radius(win,
-                                                     self.character_text_box.rect.inflate(15, 15), 15,
-                                                     Color("white"), alpha=200)
-            pygame.draw.rect(win, Color("Black"), self.character_text_box.rect.inflate(15, 15), 5, border_radius=15)
-
-            self.character_text_box.draw(win)
+            self._draw_character_text(win)
 
         if self.step == 1:
             # draw answers / monologue
