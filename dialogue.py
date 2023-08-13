@@ -466,10 +466,10 @@ class Dialogue(Logue):
             for character, delta in answer.impacts.items():
                 self.change_affinity(character, delta)
         self.player_answer = Monologue(answer.text)
-        if self.step == 1:
-            self.next_step()
+        self.next_step()
 
     def _init_answers_ui(self):
+        self.answers_ui = []
         for i, answer in enumerate(self.current_line.answers):
             f = lambda: self._handle_answer_click(answer)
             self.answers_ui.append(AnswerUI(answer.preview, i, f))
