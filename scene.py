@@ -65,18 +65,20 @@ class GameScene:
     def next_event(self):
         self.event_index += 1
 
+    def change_affinity(self, character_name, amount):
+        self.engine.change_affinity(character_name, amount)
 
 def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
     if event_data["type"] == "monologue":
         return Monologue(**event_data["data"], current_scene=scene)
     elif event_data["type"] == "dialogue":
-        print(event_data["data"])
         return Dialogue(**event_data["data"], current_scene=scene)
 
 
 from boring.fonts import get_font
 
 font_tooltip = get_font("animeace.ttf", 32)
+
 
 class EscapePoint(Clickable):
     def __init__(self, position: Tuple[int, int], destination: str, game_engine):
@@ -132,7 +134,7 @@ class EscapePoint(Clickable):
         self.game_engine.change_scene_to(self.destination)
 
     def draw_tooltip(self, screen):
-        text_surface = render_glow(self.destination, font_tooltip, pygame.Color("White"), pygame.Color("Black")  )
+        text_surface = render_glow(self.destination, font_tooltip, pygame.Color("White"), pygame.Color("Black"))
         text_rect = text_surface.get_rect(center=self.position)
         text_rect.y -= 50
         screen.blit(text_surface, text_rect)

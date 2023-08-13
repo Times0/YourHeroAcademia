@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode="w",
 
 logger = logging.getLogger(__name__)
 
-EDITOR = True
+EDITOR = False
 
 
 class Game:
@@ -63,7 +63,6 @@ class Game:
                             json.dump(d, f, indent=4)
 
     def draw(self, win):
-        win.fill(Color("Black"))
         self.engine.draw(win)
         self.btn_quit.draw(win, *self.btn_quit.image.get_rect(topright=(config.WIDTH - 15, 15)).topleft)
         pygame.display.flip()

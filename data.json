@@ -31,6 +31,10 @@
               {
                 "preview": "Yes, I am!",
                 "text": "Yes, I am! I just arrived here!",
+                "impacts": {
+                  "deku": 5,
+                  "bakugo": -5
+                },
                 "line": {
                   "text": "I thought so, nice to meet you!",
                   "answers": [
@@ -403,7 +407,15 @@
   },
   "art_room": {
     "background": "2/art_room00.jpg",
-    "escape_points": [],
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "music_room"
+      }
+    ],
     "events": [
       {
         "type": "dialogue",
@@ -432,9 +444,17 @@
       }
     ]
   },
-  "music_classroom": {
-    "background": "1/music_classroom00.jpg",
-    "escape_points": [],
+  "music_room": {
+    "background": "2/music_room00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          800
+        ],
+        "destination": "classroom"
+      }
+    ],
     "events": [
       {
         "type": "dialogue",
@@ -464,9 +484,17 @@
       }
     ]
   },
-  "main_and_regular_classrooms": {
-    "background": "1/main_and_regular_classrooms00.jpg",
-    "escape_points": [],
+  "classroom": {
+    "background": "2/classroom00.jpg",
+    "escape_points": [
+      {
+        "position": [
+          500,
+          500
+        ],
+        "destination": "teachers_office"
+      }
+    ],
     "events": [
       {
         "type": "dialogue",
@@ -496,7 +524,7 @@
     ]
   },
   "teachers_office": {
-    "background": "1/teachers_office00.jpg",
+    "background": "2/teachers_office00.jpg",
     "escape_points": [],
     "events": [
       {

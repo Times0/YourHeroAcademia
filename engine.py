@@ -3,8 +3,10 @@ from scene import GameScene
 
 class GameEngine:
     def __init__(self):
-        self.current_scene:GameScene|None = None
+        self.current_scene: GameScene | None = None
         self.loaded_scenes = {}
+
+        self.affinites = {}  # Charactername: affinity(int)
 
     def handle_events(self, events):
         if not self.current_scene:
@@ -44,3 +46,9 @@ class GameEngine:
         else:
             self.loaded_scenes[scene_name] = GameScene(self).load_scene(scene_name)
             return self.loaded_scenes[scene_name]
+
+    def change_affinity(self, character_name, amount):
+        if character_name in self.affinites:
+            self.affinites[character_name] += amount
+        else:
+            self.affinites[character_name] = amount

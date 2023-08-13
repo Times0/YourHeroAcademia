@@ -1,7 +1,8 @@
 import logging
 
 import pygame
-from PygameUIKit import button, Group
+from PygameUIKit import Group
+from PygameUIKit.button import ButtonText
 from pygame.color import Color
 
 from boring import images
@@ -17,12 +18,12 @@ class MainMenu:
 
         # UI
         self.ui = Group()
-        self.font_menu_btn = get_font("mha.ttf", 150)
+        self.font_menu_btn = get_font("basic.ttf", 100)
 
-        self.btn_start = button.ButtonText("Start new game", self.start_game, Color("White"), self.font_menu_btn,
-                                           ui_group=self.ui, border_radius=10)
-        self.btn_quit = button.ButtonText("Leave", self.quit_game, Color("White"), self.font_menu_btn,
-                                          ui_group=self.ui, border_radius=10)
+        self.btn_start = ButtonText("Start", self.start_game, Color("White"), self.font_menu_btn,
+                                    ui_group=self.ui, border_radius=10, outline_color=Color("Black"))
+        self.btn_quit = ButtonText("Leave", self.quit_game, Color("White"), self.font_menu_btn,
+                                   ui_group=self.ui, border_radius=10, outline_color=Color("Black"))
 
         self.running = True
 
@@ -49,8 +50,10 @@ class MainMenu:
         screen.blit(images.main_menu_bg, (0, 0))
         SCREEN_CENTER_W = screen.get_width() // 2
         SCREEN_CENTER_H = screen.get_height() // 2
-        self.btn_start.draw(screen, *self.btn_start.surface.get_rect(center=(SCREEN_CENTER_W, SCREEN_CENTER_H - 150)).topleft)
-        self.btn_quit.draw(screen, *self.btn_quit.surface.get_rect(center=(SCREEN_CENTER_W, SCREEN_CENTER_H + 150)).topleft)
+        self.btn_start.draw(screen,
+                            *self.btn_start.surface.get_rect(center=(SCREEN_CENTER_W, SCREEN_CENTER_H - 150)).topleft)
+        self.btn_quit.draw(screen,
+                           *self.btn_quit.surface.get_rect(center=(SCREEN_CENTER_W, SCREEN_CENTER_H + 150)).topleft)
         pygame.display.flip()
 
     def start_game(self):
