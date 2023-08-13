@@ -3,11 +3,11 @@ import logging
 import pygame.sprite
 from PygameUIKit import Group
 from PygameUIKit.button import ButtonPngIcon
+from pygame import Color
 
 import data
-from boring import config
+import config
 from boring import images
-from boring.config import Color
 from engine import GameEngine
 
 logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode="w",

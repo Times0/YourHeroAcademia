@@ -1,9 +1,8 @@
 import glob
-import os
 
 import pygame
 
-from boring.config import *
+from config import *
 
 if __name__ == "__main__":
     pygame.init()
@@ -69,3 +68,6 @@ class CharacterImageLoader:
 loader = CharacterImageLoader()
 
 mc = load("main_character/blank_female.png", scale=1.2)
+
+btn_answer_hover = load("ui/ui_dialogue_1_1.png")
+btn_answer = load("ui/ui_dialogue_1_2.png")

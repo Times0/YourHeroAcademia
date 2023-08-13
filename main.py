@@ -1,5 +1,5 @@
 import pygame
-from boring.config import *
+from config import *
 import ctypes
 
 ctypes.windll.user32.SetProcessDPIAware()

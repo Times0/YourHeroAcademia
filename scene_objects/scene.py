@@ -3,10 +3,12 @@ import os.path
 from typing import List, Tuple
 
 from boring import images
-from boring.config import WIDTH, HEIGHT
+from config import WIDTH, HEIGHT
+import config
 from boring.utils import *
-from character import Character
-from dialogue import Monologue, Dialogue
+from scene_objects.character import Character
+from scene_objects.dialogue import Dialogue
+from scene_objects.monologue import Monologue
 from ui import Clickable
 
 logger = logging.getLogger(__name__)
@@ -46,7 +48,7 @@ class GameScene:
     def load_scene(self, scene_name: str):
         import json
 
-        with open(os.path.join("data.json")) as f:
+        with open(os.path.join(config.data_path)) as f:
             data = json.load(f)
 
         self.name = scene_name
@@ -67,6 +69,7 @@ class GameScene:
 
     def change_affinity(self, character_name, amount):
         self.engine.change_affinity(character_name, amount)
+
 
 def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
     if event_data["type"] == "monologue":
@@ -134,7 +137,8 @@ class EscapePoint(Clickable):
         self.game_engine.change_scene_to(self.destination)
 
     def draw_tooltip(self, screen):
-        text_surface = render_glow(self.destination, font_tooltip, pygame.Color("White"), pygame.Color("Black"))
+        dest = self.destination.replace("_", " ").title()
+        text_surface = render_glow(dest, font_tooltip, pygame.Color("White"), pygame.Color("Black"))
         text_rect = text_surface.get_rect(center=self.position)
         text_rect.y -= 50
         screen.blit(text_surface, text_rect)
