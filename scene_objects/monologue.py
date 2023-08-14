@@ -3,11 +3,19 @@ from scene_objects.utils import *
 
 counter_font = get_font("animeace.ttf", 40)
 
-MONOLOGUE_TEXT_RECT = pygame.Rect(590, 770, 1166, 180)
-PAGE_COUNTER_POS = (1693, 706)
+x, y = 150, 540  # MODIFY HERE TO CHANGE THE POSITION OF THE MONOLOGUE
+
+# Relative to the monologue background
+MONOLOGUE_BACKGROUND_POS = (x, y)
+MONOLOGUE_TEXT_RECT = pygame.Rect(x + 440, y + 270, 1166, 180)
+MONOLOGUE_CIRCLE_CENTER = x + 227, y + 380
+PAGE_COUNTER_POS = x + 1543, y + 206
+
+font_monologue = get_font("animeace2_bld.ttf", 20)
+font_monologue_whisper = get_font("animeace2_ital.ttf", 20)
 
 
-class Monologue(Logue):
+class Monologue:
     """
     A class representing a monologue in pygame.
     The text is broken up into chunks which fit within a specified area.
@@ -15,8 +23,7 @@ class Monologue(Logue):
     """
 
     def __init__(self, text: str, character: dict = None, current_scene=None, whisper=False):
-        super().__init__(border_radius=15, font=defaul_font, current_scene=current_scene)
-
+        self.current_scene = current_scene
         if character is not None:  # If we want to display a character
             self.character = Character(**character, position=(WIDTH / 2, HEIGHT / 2))
         self.whisper = whisper
@@ -51,6 +58,11 @@ class Monologue(Logue):
 
         self.text_box.draw(screen)
         self._draw_page_counter(screen)
+
+    @staticmethod
+    def _draw_background(screen):
+        screen.blit(images.text_contour, MONOLOGUE_BACKGROUND_POS)
+        screen.blit(images.mc, images.mc.get_rect(center=MONOLOGUE_CIRCLE_CENTER).move(0, -40))
 
     def _draw_page_counter(self, screen):
         """Draws the page counter on the screen."""

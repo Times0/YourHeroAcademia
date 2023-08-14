@@ -5,7 +5,6 @@ from PygameUIKit import Group
 from PygameUIKit.button import ButtonPngIcon
 from pygame import Color
 
-import data
 import config
 from boring import images
 from engine import GameEngine
@@ -52,15 +51,7 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print(event.pos)
                 if EDITOR:
-                    if event.button == 2:
-                        print(f"Adding point")
-                        d = data.scenes_data.copy()
-                        d[self.engine.current_scene.name]["escape_points"].append(
-                            {"position": event.pos, "destination": "<scene_name>"})
-                        # dump data into data.json
-                        import json
-                        with open("data.json", "w") as f:
-                            json.dump(d, f, indent=4)
+                    pass
 
     def draw(self, win):
         self.engine.draw(win)

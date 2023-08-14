@@ -45,18 +45,18 @@ class LinePlayer:
 
 
 # Answer UI constants
-ANSWER_UI_POS = (556, 525)
+ANSWER_UI_POS = (429, 755)
 BORDER_SIZE = 5
 BORDER_RADIUS = 15
 INFLATE_SIZE = (20, 20)
 TEXT_OFFSET = (10, 10)
-TEXT_Y_OFFSET_MULTIPLIER = 30
+TEXT_Y_OFFSET_MULTIPLIER = 10
 
 font_answer = get_font("animeace.ttf", 40)
 
 
 class AnswerUI(ButtonImageText):
-    def __init__(self, text: str, index: int, onclick_f):
+    def __init__(self, text: str, index: int, nb_answers, onclick_f):
         super().__init__(images.btn_answer,
                          onclick_f=onclick_f,
                          text=text,
@@ -64,19 +64,24 @@ class AnswerUI(ButtonImageText):
                          image_hover=images.btn_answer_hover,
                          font=font_answer)
 
-        render = self.font.render(self.text, True, Color("Black"))
-        x, y = ANSWER_UI_POS
-        y += index * (TEXT_Y_OFFSET_MULTIPLIER + render.get_height())
-        self.rect = render.get_rect(topleft=(x, y)).inflate(*INFLATE_SIZE)
+        if nb_answers == 3:
+            x, y = (429, 700)
+        else:
+            x, y = ANSWER_UI_POS
+        y += index * (TEXT_Y_OFFSET_MULTIPLIER + self.rect.height)
+        self.rect.x = x
+        self.rect.y = y
 
     def draw2(self, win):
         super().draw(win, *self.rect.topleft)
 
 
-CHARACTER_POS = (WIDTH / 2, HEIGHT / 2)
+CHARACTER_POS_DEFAULT = (WIDTH / 2, HEIGHT * 0.8)
 TEXTBOX_MONOLOGUE_POS = MONOLOGUE_TEXT_RECT.topleft
 
 CHARACTER_TEXT_INFLATE = (20, 20)
+
+font_character = get_font("animeace.ttf", 30)
 
 
 class CharacterTextBox(MultiTextBox):
@@ -84,7 +89,7 @@ class CharacterTextBox(MultiTextBox):
         w, h = 400, 500
         x, y = character.rect.move(20, 20).topright
         self.rect = pygame.Rect(x, y, w, h)
-        super().__init__(text, position=(x, y), size=(w, h), font=font_monologue)
+        super().__init__(text, position=(x, y), size=(w, h), font=font_character)
 
     def draw(self, screen):
         rect = self.rect.copy()
@@ -95,10 +100,11 @@ class CharacterTextBox(MultiTextBox):
         super().draw(screen)
 
 
-class Dialogue(Logue):
-    def __init__(self, line, character, current_scene=None):
-        super().__init__(border_radius=15, font=font_monologue, current_scene=current_scene)
-        self.character = Character(name=character, position=CHARACTER_POS)
+class Dialogue:
+    def __init__(self, line, character, character_position=CHARACTER_POS_DEFAULT, current_scene=None):
+        self.current_scene = current_scene
+
+        self.character = Character(name=character, position=character_position)
         self.answers_box_rect = MONOLOGUE_TEXT_RECT
 
         self.whole_interaction: LineOther = LineOther(**line)
@@ -132,18 +138,17 @@ class Dialogue(Logue):
     def draw(self, win):
         self.character.draw(win)
 
-        self._draw_background(win)
+        # self._draw_background(win)
 
         if self.step in (0, 1):
             self.character_text_box.draw(win)
-
         if self.step == 1:
             # draw answers
             self._draw_answers(win)
         elif self.step == 2:
-            self.player_monologue.draw(win, draw_bg=False)  # already drawn
+            self.player_monologue.draw(win, draw_bg=True)
         elif self.step == 3:
-            self.player_answer.draw(win, draw_bg=False)
+            self.player_answer.draw(win, draw_bg=True)
 
     def handle_events(self, events):
         for event in events:
@@ -231,8 +236,8 @@ class Dialogue(Logue):
     def _init_answers_ui(self):
         self.answers_ui = []
         for i, answer in enumerate(self.current_line.answers):
-            f = lambda: self._handle_answer_click(answer)
-            self.answers_ui.append(AnswerUI(answer.preview, i, f))
+            f = lambda a=answer: self._handle_answer_click(a)
+            self.answers_ui.append(AnswerUI(answer.preview, i, len(self.current_line.answers), f))
 
     def change_affinity(self, character, delta):
         """Change affinity of character by delta

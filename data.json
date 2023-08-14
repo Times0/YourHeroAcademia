@@ -348,7 +348,7 @@
                 "text": "I'm not really into sports, but I can appreciate the enthusiasm of those who are.",
                 "line": {
                   "text": "Oh really? Hmm okay then.",
-                  "monologue": "Damn, maybe I shouldn’t have said that … I’m joining the hero course after all …"
+                  "monologue": "Damn, maybe I shouldn't have said that … I'm joining the hero course after all …"
                 }
               },
               {
@@ -474,8 +474,8 @@
                 "preview": "Is there a school band or choir?",
                 "text": "Is there a school band or choir here? I've always loved singing and playing music with others.",
                 "line": {
-                  "text": "Oh hmmm I’m not sure … I’d have to ask that myself.",
-                  "monologue": "That’s okay. Don’t worry about it!"
+                  "text": "Oh hmmm I'm not sure … I'd have to ask that myself.",
+                  "monologue": "That's okay. Don't worry about it!"
                 }
               }
             ]
@@ -551,7 +551,94 @@
             ]
           }
         }
+      },
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "deku_school_uniform",
+          "line": {
+            "text": "You'll still have to fill out some Paperworks – Mr. Aizawa will be here in a couple of minutes and fill them out with you plus, he'll take a picture of you for your student report card. Since we still have a couple of minutes: Would you like to wait here for him or would you like to stroll around the school with me a bit more?",
+            "answers": [
+              {
+                "preview": "I'd like to stroll around a bit more.",
+                "text": "I think I'd like to stroll around a bit more. He isn't here yet anyways and there are still a few more things I'd like to check out!",
+                "line": {
+                  "text": "That's true! There's still so much to see, and I doubt we'll get around to cover everything today, but we can explore as much as we can! If you want to sit down and wait for Mr. Aizawa, you can do so anytime. Just find a chair and make yourself comfortable!"
+                }
+              },
+              {
+                "preview": "I think I'll wait here.",
+                "text": "I think I'll wait here. Thank you very much for the tour, Midoriya!",
+                "line": {
+                  "text": "You're welcome! If you have any more questions or need help with anything, don't hesitate to ask. I'll go ahead and find Mr. Aizawa for you. Please, do make yourself comfortable, and I'll be right back."
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "monologue",
+        "data": {
+          "text": "As Midoriya walks away, I find a nearby chair to sit down and wait for Mr. Aizawa. The bustling atmosphere of the halls outside surrounds me, and I can't help but feel a mix of excitement and nerves. Being in this prestigious hero school still feels somewhat surreal. While waiting, I take a moment to look around and observe the other students passing by. Some are engaged in animated conversations, others are rushing off to classes, and a few are practicing their quirks in open spaces. It's a dynamic environment filled with aspiring heroes honing their skills. After a short while, I notice a stern-looking man making his way towards me. From what Midoriya described, I assume it's Mr. Aizawa, also known as Eraser Head, the strict and no-nonsense teacher. As he approaches, I can't help but feel a bit intimidated by his aura."
+        }
+      },
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "aizawa_school_uniform",
+          "line": {
+            "text": "You must be the late transfer student. I'm Shota Aizawa, the homeroom teacher for Class 1-A. Midoriya said you're waiting for me to complete the paperwork.",
+            "answers": [
+              {
+                "preview": "Yes, that's right.",
+                "text": "Yes, that's right. I'm [Player's Name]. Nice to meet you, Mr. Aizawa.",
+                "line": {
+                  "text": "Hmph, let's get this over with. Hand me the necessary papers, and we'll get your information sorted out."
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "monologue",
+        "data": {
+          "text": "I quickly hand over the required documents to Mr. Aizawa, who takes them with a no-nonsense expression. As he starts filling out the paperwork, I can feel his intense gaze occasionally flicking up to examine me. It's as if he's trying to assess my potential as a hero with just a single look. Wow, he really is as serious as they say. I hope he doesn't find me lacking or anything. Maybe he'll warm up after a while? After completing the paperwork, Aizawa retrieves a camera and points it at me, signaling that it's time to take the student report card photo. I do my best to stand straight and appear confident, but I can't help but feel a bit self-conscious under his scrutiny."
+        }
+      },
+      {
+        "type": "dialogue",
+        "data": {
+          "character": "aizawa_school_uniform",
+          "line": {
+            "text": "Just look at the camera and don't make any unnecessary expressions. This is just for your student file.",
+            "answers": [
+              {
+                "preview": "Okay",
+                "text": "Okay, got it.",
+                "line": {
+                  "text": "That's it. Your student file is in order. Midoriya will show you to your dorm room. Make sure you attend the opening ceremony and the orientation for late transfer students. Don't slack off in my class; I have no tolerance for laziness. Got it?"
+                }
+              },
+              {
+                "preview": "Yes, Mr. Aizawa.",
+                "text": "Yes, Mr. Aizawa. I'll do my best.",
+                "line": {
+                  "text": "Good. Now, if you'll excuse me, I have other matters to attend to."
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "monologue",
+        "data": {
+          "text": "With that, Mr. Aizawa leaves, leaving me to gather my belongings and follow Midoriya to my new dorm room. As I walk alongside Midoriya, I can't help but wonder what challenges and adventures await me in this new chapter of my life at U.A. High School."
+        }
       }
     ]
   }
 }
+

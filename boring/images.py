@@ -30,7 +30,7 @@ def load_multiple(path):
 
 
 def load_character_mood(name, mood) -> pygame.Surface:
-    return load(os.path.join("..", "assets", "characters", name, mood + ".png"), scale=0.3)
+    return load(os.path.join("..", "assets", "characters", name, mood + ".png"), scale=0.5)
 
 
 def load_character(name) -> dict[str, pygame.Surface]:
@@ -46,13 +46,6 @@ def load_character(name) -> dict[str, pygame.Surface]:
     return d
 
 
-# __________________________Imports___________________________________#
-
-main_menu_bg = load("main_menu/bg.jpg", (WIDTH, HEIGHT))
-btn_quit = load("ui/quit.png")
-text_contour = load("scenes/ui/text_contour.png")
-
-
 class CharacterImageLoader:
     def __init__(self):
         self._images = {}
@@ -65,9 +58,15 @@ class CharacterImageLoader:
         return self._images[name][mood]
 
 
+# __________________________Imports___________________________________#
+
+main_menu_bg = load("main_menu/bg.jpg", (WIDTH, HEIGHT))
+btn_quit = load("ui/quit.png")
+text_contour = load("scenes/ui/text_contour.png")
+
 loader = CharacterImageLoader()
 
 mc = load("main_character/blank_female.png", scale=1.2)
 
-btn_answer_hover = load("ui/ui_dialogue_1_1.png")
-btn_answer = load("ui/ui_dialogue_1_2.png")
+btn_answer_hover = load("scenes/ui/ui_dialogue_1_1.png")
+btn_answer = load("scenes/ui/ui_dialogue_1_2.png")

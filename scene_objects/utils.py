@@ -4,17 +4,15 @@ import pygame
 from pygame.locals import *
 
 from boring import utils
-from config import *
 from boring.fonts import get_font
+from config import *
 
 logger = logging.getLogger(__name__)
 defaul_font = get_font("basic.ttf", 30)
-font_monologue = get_font("animeace2_bld.ttf", 30)
-font_monologue_whisper = get_font("animeace2_ital.ttf", 30)
 
 from boring import images
 
-debug = True
+debug = False
 
 
 class TextBox:
@@ -46,6 +44,9 @@ class TextBox:
                 current_height += word_height
             self.surface.blit(word_surface, (current_width, current_height))
             current_width += word_width
+
+
+color_text_outline = (105, 53, 5)
 
 
 class MultiTextBox:
@@ -99,7 +100,7 @@ class MultiTextBox:
 
             if current_width + word_width > max_width:
                 current_width = 0
-                current_height += word_height
+                current_height += word_height + 5
 
             if current_height + word_height > max_height:
                 full_sentence, reste = cut_unfinished_sentence(words)
@@ -123,7 +124,7 @@ class MultiTextBox:
     def _render_words(self, words, surface):
         """Render the words on the surface."""
         for word, (x, y) in words:
-            word_surface = utils.render_glow(word + " ", self.font, Color("white"), Color("black"), opx=2)
+            word_surface = utils.render_glow(word + " ", self.font, Color("white"), color_text_outline, opx=3)
             surface.blit(word_surface, (x, y))
 
     def draw(self, win):
@@ -149,33 +150,9 @@ class MultiTextBox:
             logger.warning("Tried to go to next text box but there is no next text box.")
 
 
-MONOLOGUE_COUNTOUR_POS = (150, 500)
-MONOLOGUE_CIRCLE_CENTER = (377, 880)
 
 
-class Logue:
-    def __init__(self, border_radius=15, font=defaul_font, current_scene=None):
-        self.border_radius = border_radius
-        self.font = font
 
-        x, y = (587, 769)
-        x1, y1 = (1778, 956)
-
-        w, h = (x1 - x, y1 - y)
-        self.current_scene = current_scene
-        self._init_rects((x, y), w, h)
-
-    def _init_rects(self, pos, width: int, height: int):
-        """Initialize the rectangles for the text display."""
-        self.countour_rect = pygame.Rect(*pos, width, height)
-        self.text_rect = self.countour_rect.inflate(-20, -20)
-
-    def _draw_background(self, screen):
-        """Draws the background for the monologue."""
-        # Draw character head in the circle
-        screen.blit(images.text_contour, MONOLOGUE_COUNTOUR_POS)
-        # Draw the circle
-        screen.blit(images.mc, images.mc.get_rect(center=MONOLOGUE_CIRCLE_CENTER).move(0, -40))
 
 
 def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…")):
