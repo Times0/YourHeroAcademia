@@ -10,8 +10,6 @@ from config import *
 logger = logging.getLogger(__name__)
 defaul_font = get_font("basic.ttf", 30)
 
-from boring import images
-
 debug = False
 
 
@@ -148,11 +146,6 @@ class MultiTextBox:
             self.current_index += 1
         else:
             logger.warning("Tried to go to next text box but there is no next text box.")
-
-
-
-
-
 
 
 def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…")):

@@ -1,5 +1,6 @@
 from scene_objects.character import Character
 from scene_objects.utils import *
+from boring import images
 
 counter_font = get_font("animeace.ttf", 40)
 
@@ -41,11 +42,15 @@ class Monologue:
         for event in events:
             if event.type == KEYDOWN and event.key == K_SPACE:
                 self._handle_space_key()
+            if event.type == MOUSEBUTTONDOWN:
+                self._handle_space_key()
 
     def _handle_space_key(self):
         """Handle the space key event."""
         self.text_box.current_index += 1
+        print(f"Current index: {self.text_box.current_index}, len: {len(self.text_box.surfaces)}")
         if self.text_box.current_index >= len(self.text_box.surfaces):
+            print(f"Current scene: {self.current_scene}")
             if self.current_scene is not None:
                 self.current_scene.next_event()
 

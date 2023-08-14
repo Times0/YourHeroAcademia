@@ -5,8 +5,16 @@ from scene_objects.character import Character
 from scene_objects.monologue import Monologue, MONOLOGUE_TEXT_RECT
 from scene_objects.utils import *
 from scene_objects.utils import MultiTextBox
+from boring import images
 
 logger = logging.getLogger(__name__)
+
+
+def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
+    if event_data["type"] == "monologue":
+        return Monologue(**event_data["data"], current_scene=scene)
+    elif event_data["type"] == "dialogue":
+        return Dialogue(**event_data["data"], current_scene=scene)
 
 
 class LineOther:
@@ -18,13 +26,13 @@ class LineOther:
     Monologue is a string that the character says after the text is finished.
     """
 
-    def __init__(self, text, answers: dict = None, monologue: str = None):
+    def __init__(self, text, answers: dict = None, next_event: dict = None, scene=None):
         self.text = text
         if answers is not None:
-            self.answers = [LinePlayer(**answer) for answer in answers]
+            self.answers = [LinePlayer(**answer, scene=scene) for answer in answers]
         else:
             self.answers = None
-        self.monologue = monologue
+        self.next_event = create_event_from_data(next_event, scene) if next_event is not None else None
 
 
 class LinePlayer:
@@ -34,11 +42,11 @@ class LinePlayer:
     line is the next line of dialogue that the other character says.
     """
 
-    def __init__(self, preview: str, text: str, line: dict, impacts: dict = None):
+    def __init__(self, preview: str, text: str, line: dict, impacts: dict = None, scene=None):
         self.preview: str = preview
         self.text: str = text
         if line is not None:
-            self.line: LineOther = LineOther(**line)
+            self.line: LineOther = LineOther(**line, scene=scene)
         else:
             self.line = None
         self.impacts = impacts
@@ -107,7 +115,7 @@ class Dialogue:
         self.character = Character(name=character, position=character_position)
         self.answers_box_rect = MONOLOGUE_TEXT_RECT
 
-        self.whole_interaction: LineOther = LineOther(**line)
+        self.whole_interaction: LineOther = LineOther(**line, scene=current_scene)
         self.current_line: LineOther | LinePlayer = self.whole_interaction
 
         self.answers_ui = []
@@ -115,9 +123,9 @@ class Dialogue:
 
         self.character_text_box: CharacterTextBox | None = None
         self.player_answer: Monologue | None = None
-        self.player_monologue: Monologue | None = None
+        self.next_event: Dialogue | Monologue | None = None
 
-        self.step = 0  # 0 = other speaks, 1 = player sees answers, 2 = player's chara is monologuing, 3 = player speaks
+        self.step = 0  # 0 = other speaks, 1 = player sees answers, 2 = player speaks
 
         self.render_text_boxes()
 
@@ -127,9 +135,6 @@ class Dialogue:
         self.character_text_box = CharacterTextBox(self.current_line.text, self.character)
         if self.current_line.answers is not None:
             self._init_answers_ui()
-        elif self.current_line.monologue is not None:
-            logger.debug("Init player monologue")
-            self.player_monologue = Monologue(self.current_line.monologue, whisper=True)
 
     def _draw_answers(self, screen):
         for answer in self.answers_ui:
@@ -143,19 +148,20 @@ class Dialogue:
         if self.step in (0, 1):
             self.character_text_box.draw(win)
         if self.step == 1:
-            # draw answers
             self._draw_answers(win)
         elif self.step == 2:
-            self.player_monologue.draw(win, draw_bg=True)
-        elif self.step == 3:
             self.player_answer.draw(win, draw_bg=True)
 
     def handle_events(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self._handle_space_key()
-                    return
+                    self._handle_space_key_or_click()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    self._handle_space_key_or_click()
+
         if self.step == 0:
             # Other is talking waiting for space press handled already
             pass
@@ -176,52 +182,35 @@ class Dialogue:
         if self.step == 0:
             if self.current_line.answers is not None:
                 self.step = 1
-            elif self.current_line.monologue is not None:
-                self.step = 2
             else:
                 self.current_line = None
                 self.current_scene.next_event()
                 return
         elif self.step == 1:
-            self.step = 3
-        elif self.step == 2:
-            self.step = 3
-            self.current_line = None
-            self.current_scene.next_event()
-            return
-        elif self.step == 3:  # player answered
+            self.step = 2
+        elif self.step == 2:  # player answered
             if self.chosen_answer.line is None:
                 # End of dialogue
                 print(f"End of dialogue bc {self.chosen_answer.preview} does not have a line")
                 self.current_line = None
                 self.current_scene.next_event()
                 return
-            self.step = 0
-            self.current_line = self.chosen_answer.line
-            self.chosen_answer = None
+            else:
+                self.step = 0
+                self.current_line = self.chosen_answer.line
+                self.chosen_answer = None
 
         self.render_text_boxes()
         if debug:
             print(f"-> New step : {self.step}")
 
-    def _handle_space_key(self):
+    def _handle_space_key_or_click(self):
         if self.step == 0:
             if self.character_text_box.is_finished():
                 self.next_step()
             else:
                 self.character_text_box.next()
-        elif self.step == 1:
-            pass
         elif self.step == 2:
-            print("Handling space key in step 2")
-            logger.debug("Handling space key in step 2")
-            if self.player_monologue.text_box.is_finished():
-                logger.debug("Monologue finished")
-                self.next_step()
-            else:
-                logger.debug("Monologue not finished")
-                self.player_monologue.text_box.next()
-        elif self.step == 3:
             self.next_step()
 
     def _handle_answer_click(self, answer):
@@ -231,6 +220,7 @@ class Dialogue:
             for character, delta in answer.impacts.items():
                 self.change_affinity(character, delta)
         self.player_answer = Monologue(answer.text)
+        self.load_new_line(answer.line)
         self.next_step()
 
     def _init_answers_ui(self):
@@ -245,6 +235,12 @@ class Dialogue:
         """
         self.current_scene.change_affinity(character, delta)
         print(self.current_scene.engine.affinites)
+
+    def load_new_line(self, line):
+        self.current_line = line
+        self.next_event = line.next_event
+        if self.next_event is not None:
+            self.current_scene.add_event(self.next_event)
 
 
 def draw_transparent_rect_with_border_radius(screen, rect, color, border_radius, alpha):

@@ -50,3 +50,4 @@ def render_glow(text, font, gfcolor=pygame.Color('dodgerblue'), ocolor=(255, 255
 
     surf.blit(textsurface, (opx, opx))
     return surf
+

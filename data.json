@@ -43,7 +43,12 @@
                       "text": "Who are you? Shouldn't a teacher be showing me around?",
                       "line": {
                         "text": "Oh, I apologize if I gave off the wrong impression. I'm actually a student here, just like you. My name is Midoriya Izuku. I was asked to help you settle in. UA has a student support system, you see!",
-                        "monologue": "So, this guy is a student? He seems nice enough, but I was expecting a teacher. Then again, at such a renowned school the teachers must be really busy all the time \u2026 I guess I'll have to make the best of it"
+                        "next_event": {
+                          "type": "monologue",
+                          "data": {
+                            "text": "So, this guy is a student? He seems nice enough, but I was expecting a teacher. Then again, at such a renowned school the teachers must be really busy all the time \u2026 I guess I'll have to make the best of it"
+                          }
+                        }
                       }
                     },
                     {
@@ -51,7 +56,12 @@
                       "text": "Nice to meet you. I'm the new transfer student. My name is [player's name].",
                       "line": {
                         "text": "Pleasure to meet you, [player's name]! I'm Midoriya Izuku, and I'll be your guide around UA. I'm here to help you settle in and answer any questions you may have.",
-                        "monologue": "He seems friendly enough, even if I was expecting a teacher. I'll try to make the most of this situation."
+                        "next_event": {
+                          "type": "monologue",
+                          "data": {
+                            "text": "Midoriya seems like a nice guy. I'm glad I have someone to show me around. I'm sure I'll have a lot of questions, and it's good to know I can count on him for help."
+                          }
+                        }
                       }
                     }
                   ]
@@ -73,7 +83,12 @@
                 "text": "Sure, lead the way, Midoriya!",
                 "line": {
                   "text": "Great! Let's start with the main building. There's so much to see and learn here at UA. Follow me!",
-                  "monologue": "Well, it seems like Midoriya knows his way around. I'll follow him for now and see what UA has to offer."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "Well, it seems like Midoriya knows his way around. I'll follow him for now and see what UA has to offer."
+                    }
+                  }
                 }
               },
               {
@@ -81,7 +96,12 @@
                 "text": "Thanks for the offer, but I think I can find my way around.",
                 "line": {
                   "text": "Oh, I understand. But I thought I could show you some of the highlights and help you get settled. Just let me know if you change your mind, okay?",
-                  "monologue": "I can be independent and find my own way, plus I\u2019m not happy being shown around by a student instead of a teacher \u2026 Though having someone \u2013 anyone show me around might not be the worst idea."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "I can be independent and find my own way, plus I’m not happy being shown around by a student instead of a teacher … Though having someone – anyone show me around might not be the worst idea."
+                    }
+                  }
                 }
               }
             ]

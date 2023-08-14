@@ -70,6 +70,9 @@ class GameScene:
     def change_affinity(self, character_name, amount):
         self.engine.change_affinity(character_name, amount)
 
+    def add_event(self, event):
+        self.game_events.insert(self.event_index + 1, event)
+
 
 def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
     if event_data["type"] == "monologue":
