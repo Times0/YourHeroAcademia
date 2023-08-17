@@ -1,11 +1,11 @@
 import logging
 
 import pygame.sprite
-from PygameUIKit import Group
-from PygameUIKit.button import ButtonPngIcon
 from pygame import Color
 
 import config
+from PygameUIKit import Group
+from PygameUIKit.button import ButtonPngIcon
 from boring import images
 from engine import GameEngine
 
@@ -23,7 +23,7 @@ class Game:
         self.win = win
 
         self.engine = GameEngine()
-        self.engine.change_scene_to("classroom")
+        self.engine.change_scene_to("entrance")
 
         self.ui = Group()
         self.btn_quit = ButtonPngIcon(images.btn_quit, Color("Grey"), self.quit)
