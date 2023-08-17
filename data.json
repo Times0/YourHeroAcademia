@@ -730,6 +730,13 @@
                     }
                   }
                 }
+              },
+              {
+                "preview": "I think I’d like to stroll around the school a bit more.",
+                "text": "I think I'd like to stroll around a bit more. He isn't here yet anyways, and there are still a few more things I'd like to check out!",
+                "line": {
+                  "text": "That's true! There's still so much to see, and I doubt we'll get around to cover everything today, but we can explore as much as we can! If you want to sit down and wait for Mr. Aizawa, you can do so anytime. Just find a chair and make yourself comfortable!"
+                }
               }
             ]
           }
