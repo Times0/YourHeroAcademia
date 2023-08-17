@@ -10,6 +10,7 @@ from scene_objects.character import Character
 from scene_objects.dialogue import Dialogue
 from scene_objects.escape_point import EscapePoint
 from scene_objects.monologue import Monologue
+from scene_objects.utils import create_event_from_data
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,7 @@ class GameScene:
     def load_scene(self, scene_name: str):
         import json
 
-        with open(os.path.join(config.data_path)) as f:
+        with open(os.path.join(config.data_path), encoding="utf-8") as f:
             data = json.load(f)
 
         self.name = scene_name
@@ -66,16 +67,15 @@ class GameScene:
 
     def next_event(self):
         self.event_index += 1
+        logger.info(f"Next event: {self.get_current_event()}")
 
     def change_affinity(self, character_name, amount):
         self.engine.change_affinity(character_name, amount)
 
     def add_event(self, event):
+        logger.debug(f"Adding event {event}")
         self.game_events.insert(self.event_index + 1, event)
+        logger.debug(f"Events: {self.game_events}")
 
-
-def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
-    if event_data["type"] == "monologue":
-        return Monologue(**event_data["data"], current_scene=scene)
-    elif event_data["type"] == "dialogue":
-        return Dialogue(**event_data["data"], current_scene=scene)
+    def __repr__(self):
+        return f"GameScene({self.name})"

@@ -1,20 +1,30 @@
 import pygame as pg
 from PygameUIKit.button import ButtonImageText
 
+from boring import images
 from scene_objects.character import Character
 from scene_objects.monologue import Monologue, MONOLOGUE_TEXT_RECT
 from scene_objects.utils import *
 from scene_objects.utils import MultiTextBox
-from boring import images
 
 logger = logging.getLogger(__name__)
 
+font_character = get_font("Vera.ttf", 32)
 
-def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
-    if event_data["type"] == "monologue":
-        return Monologue(**event_data["data"], current_scene=scene)
-    elif event_data["type"] == "dialogue":
-        return Dialogue(**event_data["data"], current_scene=scene)
+# Answer UI constants
+ANSWER_UI_POS = (429, 755)
+BORDER_SIZE = 5
+BORDER_RADIUS = 15
+INFLATE_SIZE = (20, 20)
+TEXT_OFFSET = (10, 10)
+TEXT_Y_OFFSET_MULTIPLIER = 10
+
+font_answer = get_font("animeace.ttf", 40)
+
+CHARACTER_POS_DEFAULT = (WIDTH / 2, HEIGHT * 0.8)
+TEXTBOX_MONOLOGUE_POS = MONOLOGUE_TEXT_RECT.topleft
+
+CHARACTER_TEXT_INFLATE = (20, 20)
 
 
 class LineOther:
@@ -52,17 +62,6 @@ class LinePlayer:
         self.impacts = impacts
 
 
-# Answer UI constants
-ANSWER_UI_POS = (429, 755)
-BORDER_SIZE = 5
-BORDER_RADIUS = 15
-INFLATE_SIZE = (20, 20)
-TEXT_OFFSET = (10, 10)
-TEXT_Y_OFFSET_MULTIPLIER = 10
-
-font_answer = get_font("animeace.ttf", 40)
-
-
 class AnswerUI(ButtonImageText):
     def __init__(self, text: str, index: int, nb_answers, onclick_f):
         super().__init__(images.btn_answer,
@@ -82,14 +81,6 @@ class AnswerUI(ButtonImageText):
 
     def draw2(self, win):
         super().draw(win, *self.rect.topleft)
-
-
-CHARACTER_POS_DEFAULT = (WIDTH / 2, HEIGHT * 0.8)
-TEXTBOX_MONOLOGUE_POS = MONOLOGUE_TEXT_RECT.topleft
-
-CHARACTER_TEXT_INFLATE = (20, 20)
-
-font_character = get_font("animeace.ttf", 30)
 
 
 class CharacterTextBox(MultiTextBox):
@@ -162,25 +153,15 @@ class Dialogue:
                 if event.button == 1:
                     self._handle_space_key_or_click()
 
-        if self.step == 0:
-            # Other is talking waiting for space press handled already
-            pass
-            return
-        elif self.step == 1:
+        if self.step == 1:
             # Player has to choose answer
             for answer in self.answers_ui:
                 answer.handle_events(events)
-        elif self.step == 2:
-            pass
-        elif self.step == 3:
-            # wait for space press
-            pass
 
     def next_step(self):
-        if debug:
-            print(f"Old step: {self.step}", end=" ")
+        logger.debug(f"Changing step")
         if self.step == 0:
-            if self.current_line.answers is not None:
+            if self.current_line.answers:
                 self.step = 1
             else:
                 self.current_line = None
@@ -191,7 +172,6 @@ class Dialogue:
         elif self.step == 2:  # player answered
             if self.chosen_answer.line is None:
                 # End of dialogue
-                print(f"End of dialogue bc {self.chosen_answer.preview} does not have a line")
                 self.current_line = None
                 self.current_scene.next_event()
                 return
@@ -201,14 +181,16 @@ class Dialogue:
                 self.chosen_answer = None
 
         self.render_text_boxes()
-        if debug:
-            print(f"-> New step : {self.step}")
+        logger.debug(f"Dialogue new step: {self.step}")
 
     def _handle_space_key_or_click(self):
         if self.step == 0:
+            print(f"Text box finished: {self.character_text_box.is_finished()}")
             if self.character_text_box.is_finished():
+                logger.debug(f"Text box finished, next step")
                 self.next_step()
             else:
+                logger.debug(f"Text box not finished, next text")
                 self.character_text_box.next()
         elif self.step == 2:
             self.next_step()
@@ -241,6 +223,9 @@ class Dialogue:
         self.next_event = line.next_event
         if self.next_event is not None:
             self.current_scene.add_event(self.next_event)
+
+    def __repr__(self):
+        return f"Dialogue('{self.whole_interaction.text[:20]}...')"
 
 
 def draw_transparent_rect_with_border_radius(screen, rect, color, border_radius, alpha):

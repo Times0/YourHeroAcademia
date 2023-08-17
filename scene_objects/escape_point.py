@@ -22,9 +22,6 @@ class EscapePoint(Clickable):
         size = 10
 
         if self.show_tooltip:
-            # Improved Glow effect
-            # The glow_sizes list determines the radii of the circles for the glow effect,
-            # from outermost (largest and most transparent) to innermost (smallest and least transparent).
             glow_sizes = [size + i for i in range(15, 3, -2)]  # e.g. [25, 23, 21, ...]
 
             # Colors gradually transition from a soft yellow with low opacity to a stronger yellow with higher opacity.
@@ -58,6 +55,9 @@ class EscapePoint(Clickable):
 
         if self.show_tooltip:
             self.draw_tooltip(screen)
+
+    def draw_animation(self, screen):
+        pass
 
     def go_to_next_scene(self):
         self.game_engine.change_scene_to(self.destination)

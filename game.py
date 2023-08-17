@@ -23,7 +23,7 @@ class Game:
         self.win = win
 
         self.engine = GameEngine()
-        self.engine.change_scene_to("entrance")
+        self.engine.change_scene_to("classroom")
 
         self.ui = Group()
         self.btn_quit = ButtonPngIcon(images.btn_quit, Color("Grey"), self.quit)
@@ -49,7 +49,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.game_is_on = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(event.pos)
+                # print(event.pos)
                 if EDITOR:
                     pass
 

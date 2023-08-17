@@ -122,7 +122,7 @@ class MultiTextBox:
     def _render_words(self, words, surface):
         """Render the words on the surface."""
         for word, (x, y) in words:
-            word_surface = utils.render_glow(word + " ", self.font, Color("white"), color_text_outline, opx=3)
+            word_surface = utils.render_glow(word + " ", self.font, Color("white"), color_text_outline, opx=2)
             surface.blit(word_surface, (x, y))
 
     def draw(self, win):
@@ -159,3 +159,14 @@ def cut_unfinished_sentence(words, punctuation=(".", "!", "?", ";", "…")):
         return words, []
     else:
         return words[:last_punctuation_index + 1], words[last_punctuation_index + 1:]
+
+
+def create_event_from_data(event_data, scene) -> "Monologue" or "Dialogue":
+    from scene_objects.dialogue import Dialogue
+    from scene_objects.monologue import Monologue
+
+    if event_data["type"] == "monologue":
+        return Monologue(**event_data["data"], current_scene=scene)
+
+    elif event_data["type"] == "dialogue":
+        return Dialogue(**event_data["data"], current_scene=scene)

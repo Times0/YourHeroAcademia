@@ -1,6 +1,6 @@
+from boring import images
 from scene_objects.character import Character
 from scene_objects.utils import *
-from boring import images
 
 counter_font = get_font("animeace.ttf", 40)
 
@@ -12,8 +12,8 @@ MONOLOGUE_TEXT_RECT = pygame.Rect(x + 440, y + 270, 1166, 180)
 MONOLOGUE_CIRCLE_CENTER = x + 227, y + 380
 PAGE_COUNTER_POS = x + 1543, y + 206
 
-font_monologue = get_font("animeace2_bld.ttf", 20)
-font_monologue_whisper = get_font("animeace2_ital.ttf", 20)
+font_monologue = get_font("Vera.ttf", 32)
+font_monologue_whisper = get_font("animeace2_ital.ttf", 32)
 
 
 class Monologue:
@@ -23,12 +23,12 @@ class Monologue:
     These chunks can be navigated through using the space bar.
     """
 
-    def __init__(self, text: str, character: dict = None, current_scene=None, whisper=False):
+    def __init__(self, text: str, character: dict = None, next_event=None, current_scene=None, whisper=False):
         self.current_scene = current_scene
         if character is not None:  # If we want to display a character
             self.character = Character(**character, position=(WIDTH / 2, HEIGHT / 2))
         self.whisper = whisper
-
+        self.next_event = create_event_from_data(next_event, current_scene) if next_event is not None else None
         if self.whisper:
             font = font_monologue_whisper
             text = f"({text})" if text[0] != "(" else f"{text}"
@@ -50,9 +50,12 @@ class Monologue:
         self.text_box.current_index += 1
         print(f"Current index: {self.text_box.current_index}, len: {len(self.text_box.surfaces)}")
         if self.text_box.current_index >= len(self.text_box.surfaces):
-            print(f"Current scene: {self.current_scene}")
             if self.current_scene is not None:
-                self.current_scene.next_event()
+                if self.next_event:
+                    self.current_scene.add_event(self.next_event)
+                    self.current_scene.next_event()
+                else:
+                    self.current_scene.next_event()
 
     def draw(self, screen, draw_bg=True):
         """Draws the monologue on the screen."""
@@ -74,3 +77,6 @@ class Monologue:
         page_counter = counter_font.render(
             f"{self.text_box.current_index + 1}/{len(self.text_box.surfaces)}", True, Color("Black"))
         screen.blit(page_counter, page_counter.get_rect(center=PAGE_COUNTER_POS))
+
+    def __repr__(self):
+        return f"<Monologue: {self.text_box.text[0:20]}>"

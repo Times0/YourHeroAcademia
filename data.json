@@ -134,7 +134,12 @@
                 "text": "Can you tell me which ones aren\u2019t taken yet, Midoriya?",
                 "line": {
                   "text": "Quite a few of them, actually, but it's usually better to choose a locker closer to your classes. That way, you won't have to rush around between breaks. Let's see if there are any available near your first-period classroom.",
-                  "monologue": "Midoriya and I look around the lockers and find one available. Number \u201c095\u201d I should remember that. I\u2019ll take the key for now and sort my belongings in on my first school day."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "\"Midoriya and I look around the lockers and find one available. Number \\u201c095\\u201d I should remember that. I\\u2019ll take the key for now and sort my belongings in on my first school day.\""
+                    }
+                  }
                 }
               }
             ]
@@ -206,7 +211,12 @@
                 "text": "I appreciate the serene atmosphere here. It's perfect for concentrating on my studies.",
                 "line": {
                   "text": "Absolutely! It's one of the few places where you can escape the noise and distractions. If you ever need assistance with your studies, there are usually students willing to help out.",
-                  "monologue": "The study hall seems like a peaceful spot. It'll be useful for those times when I need to focus and get some work done."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "The study hall seems like a peaceful spot. It'll be useful for those times when I need to focus and get some work done."
+                    }
+                  }
                 }
               },
               {
@@ -214,7 +224,12 @@
                 "text": "Do students often help each other out in the study hall, Midoriya?",
                 "line": {
                   "text": "Definitely! Many students are willing to assist their classmates with difficult subjects or provide study tips. It's a collaborative environment where we all strive to excel together.",
-                  "monologue": "It's nice to know that students here support each other academically. I might reach out for help if I ever struggle with a subject."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "It's nice to know that students here support each other academically. I might reach out for help if I ever struggle with a subject."
+                    }
+                  }
                 }
               }
             ]
@@ -247,7 +262,12 @@
                 "text": "I love libraries. They're my favorite place to escape into the world of books. My old school didn\u2019t have one, unfortunately.",
                 "line": {
                   "text": "I completely understand! Libraries have a unique charm. You'll find plenty of inspiration and information within these walls.",
-                  "monologue": "The library is going to be one of my favorite spots in UA. I can't wait to dive into the books and discover new stories."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "The library is going to be one of my favorite spots in UA. I can't wait to dive into the books and discover new stories."
+                    }
+                  }
                 }
               },
               {
@@ -255,7 +275,12 @@
                 "text": "Are there any special rules or guidelines I should know about when using the library, Midoriya?",
                 "line": {
                   "text": "The library staff appreciates a quiet and respectful environment. Make sure to keep noise to a minimum and return borrowed books on time. Other than that, feel free to make yourself comfortable and explore the vast collection.",
-                  "monologue": "It's essential to be mindful of the library's rules and respect the space. I'll make sure to follow them and make the most of my time here."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "It's essential to be mindful of the library's rules and respect the space. I'll make sure to follow them and make the most of my time here."
+                    }
+                  }
                 }
               }
             ]
@@ -264,8 +289,8 @@
       }
     ]
   },
-  "infirmairy": {
-    "background": "1/infirmairy00.jpg",
+  "infirmary": {
+    "background": "1/infirmary00.jpg",
     "escape_points": [
       {
         "position": [
@@ -287,14 +312,14 @@
                 "preview": "I hope I never have to visit here.",
                 "text": "I hope I never have to visit the infirmary. It's always better to stay healthy.",
                 "line": {
-                  "text": " That's true, but accidents happen, and it's comforting to know we have a capable nurse here. Hopefully, you won't need to visit, though!"
+                  "text": "That's true, but accidents happen, and it's comforting to know we have a capable nurse here. Hopefully, you won't need to visit, though!"
                 }
               },
               {
                 "preview": "Is Recovery Girl nice?",
                 "text": "Is Recovery Girl a friendly nurse? I hope she's nice.",
                 "line": {
-                  "text": "Recovery Girl is amazing! She may look strict, but she genuinely cares for us. Her Quirk allows her to heal injuries quickly. You'll feel safe in her hands."
+                  "text": "Recovery Girl is amazing! She may seem strict, but she genuinely cares for us. Her Quirk allows her to heal injuries quickly. You'll feel safe in her hands."
                 }
               }
             ]
@@ -326,8 +351,13 @@
                 "preview": "Thanks for pointing out the obvious.",
                 "text": "Thanks for pointing out the obvious, Midoriya. I'm familiar with how toilets work.",
                 "line": {
-                  "text": "I\u2019m sorry if it seemed unnecessary. It's just part of the tour. Let's move on to the next location.",
-                  "monologue": "I appreciate Midoriya's effort to show me around, but I didn't really need a detailed introduction to the toilets."
+                  "text": "I'm sorry if it seemed unnecessary. It's just part of the tour. Let's move on to the next location.",
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "I appreciate Midoriya's effort to show me around, but I didn't really need a detailed introduction to the toilets."
+                    }
+                  }
                 }
               },
               {
@@ -335,7 +365,12 @@
                 "text": "Are the school toilets usually well-maintained, Midoriya?",
                 "line": {
                   "text": "Yes, the school staff ensures they're clean and hygienic. We all have a responsibility to keep them that way. If you notice any issues, report them to the faculty.",
-                  "monologue": "Well, even the school toilets are essential, I guess. I can't help but chuckle at how he's thorough in showing me everything."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "Well, even the school toilets are essential, I guess. I can't help but chuckle at how he's thorough in showing me everything."
+                    }
+                  }
                 }
               }
             ]
@@ -368,7 +403,12 @@
                 "text": "I'm not really into sports, but I can appreciate the enthusiasm of those who are.",
                 "line": {
                   "text": "Oh really? Hmm okay then.",
-                  "monologue": "Damn, maybe I shouldn't have said that … I'm joining the hero course after all …"
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "Damn, maybe I shouldn't have said that … I'm joining the hero course after all …"
+                    }
+                  }
                 }
               },
               {
@@ -376,7 +416,12 @@
                 "text": "Do students often organize games or competitions here on the basketball court, Midoriya?",
                 "line": {
                   "text": "Absolutely! It's a hub for friendly games and tournaments. You'll find students engaging in basketball matches and showcasing their Quirks in creative ways. It's a fantastic display of talent and teamwork.",
-                  "monologue": "The basketball court seems like a vibrant space for students to showcase their skills and bond over sports. It could be an opportunity to witness some extraordinary Quirks in action."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "\"The basketball court seems like a vibrant space for students to showcase their skills and bond over sports. It could be an opportunity to witness some extraordinary Quirks in action.\""
+                    }
+                  }
                 }
               }
             ]
@@ -409,7 +454,12 @@
                 "text": "I could definitely use a break. These couches look comfy, and it's nice to have a space to relax in the middle of the school.",
                 "line": {
                   "text": "Absolutely! It's a great place to unwind and recharge. Feel free to take a seat whenever you need a break from classes or just want to socialize.",
-                  "monologue": "The stairs with couches offer a much-needed respite from the hustle and bustle of the school. It's important to take breaks and recharge to stay focused."
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "The stairs with couches offer a much-needed respite from the hustle and bustle of the school. It's important to take breaks and recharge to stay focused."
+                    }
+                  }
                 }
               },
               {
@@ -448,7 +498,13 @@
                 "preview": "I'm not really into art.",
                 "text": "I'm not really into art, but I can appreciate the talent and effort that goes into it.",
                 "line": {
-                  "text": "That's alright! Not everyone is drawn to art. But who knows, maybe you'll discover a hidden talent or find something that piques your interest while you're here."
+                  "text": "That's alright! Not everyone is drawn to art. But who knows, maybe you'll discover a hidden talent or find something that piques your interest while you're here.",
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "I've always admired artists for their ability to express emotions and stories through their creations. Maybe the art room will be a space where I can explore my own creative side."
+                    }
+                  }
                 }
               },
               {
@@ -495,7 +551,12 @@
                 "text": "Is there a school band or choir here? I've always loved singing and playing music with others.",
                 "line": {
                   "text": "Oh hmmm I'm not sure … I'd have to ask that myself.",
-                  "monologue": "That's okay. Don't worry about it!"
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "That's okay. Don't worry about it!"
+                    }
+                  }
                 }
               }
             ]
@@ -527,7 +588,13 @@
                 "preview": "I hope the classes aren't too challenging.",
                 "text": "I hope the classes here aren't too challenging. I want to excel, but I also don't want to feel overwhelmed.",
                 "line": {
-                  "text": "The classes can be demanding, but the teachers are excellent at providing guidance and support. It's a chance for us to push ourselves and develop our abilities. Don't worry; you'll find your rhythm."
+                  "text": "The classes can be demanding, but the teachers are excellent at providing guidance and support. It's a chance for us to push ourselves and develop our abilities. Don't worry; you'll find your rhythm.",
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "The journey ahead seems demanding but equally exciting. I'm prepared to put in the effort and make the most of my time at UA."
+                    }
+                  }
                 }
               },
               {
@@ -577,85 +644,95 @@
         "data": {
           "character": "deku_school_uniform",
           "line": {
-            "text": "You'll still have to fill out some Paperworks – Mr. Aizawa will be here in a couple of minutes and fill them out with you plus, he'll take a picture of you for your student report card. Since we still have a couple of minutes: Would you like to wait here for him or would you like to stroll around the school with me a bit more?",
+            "text": "You’ll still have to fill out some Paperworks – Mr. Aizawa will be here in a couple of minutes and fill them out with you plus, he’ll take a picture of you for your student report card. Since we still have a couple of minutes: Would you like to wait here for him or would you like to stroll around the school with me a bit more?",
             "answers": [
               {
-                "preview": "I'd like to stroll around a bit more.",
-                "text": "I think I'd like to stroll around a bit more. He isn't here yet anyways and there are still a few more things I'd like to check out!",
+                "preview": "I think I’d like to wait here.",
+                "text": "I think I’ll wait here. Thank you very much for the tour, Midoriya!",
                 "line": {
-                  "text": "That's true! There's still so much to see, and I doubt we'll get around to cover everything today, but we can explore as much as we can! If you want to sit down and wait for Mr. Aizawa, you can do so anytime. Just find a chair and make yourself comfortable!"
-                }
-              },
-              {
-                "preview": "I think I'll wait here.",
-                "text": "I think I'll wait here. Thank you very much for the tour, Midoriya!",
-                "line": {
-                  "text": "You're welcome! If you have any more questions or need help with anything, don't hesitate to ask. I'll go ahead and find Mr. Aizawa for you. Please, do make yourself comfortable, and I'll be right back."
+                  "text": "You're welcome! If you have any more questions or need help with anything, don't hesitate to ask. I'll go ahead and find Mr. Aizawa for you. Please, do make yourself comfortable, and I'll be right back.",
+                  "next_event": {
+                    "type": "monologue",
+                    "data": {
+                      "text": "As Midoriya walks away, I find a nearby chair to sit down and wait for Mr. Aizawa. The bustling atmosphere of the halls outside surrounds me, and I can't help but feel a mix of excitement and nerves. Being in this prestigious hero school still feels somewhat surreal.\n\nWhile waiting, I take a moment to look around and observe the other students passing by. Some are engaged in animated conversations, others are rushing off to classes, and a few are practicing their quirks in open spaces. It's a dynamic environment filled with aspiring heroes honing their skills.\n\nAfter a short while, I notice a stern-looking man making his way towards me. From what Midoriya described, I assume it's Mr. Aizawa, also known as Eraser Head, the strict and no-nonsense teacher. As he approaches, I can't help but feel a bit intimidated by his aura.",
+                      "next_event": {
+                        "type": "dialogue",
+                        "data": {
+                          "character": "aizawa_school_uniform",
+                          "line": {
+                            "text": "You must be the late transfer student. I'm Shota Aizawa, the homeroom teacher for Class 1-A. Midoriya said you're waiting for me to complete the paperwork.",
+                            "answers": [
+                              {
+                                "preview": "Yes, that's correct.",
+                                "text": " Yes, that's right. I'm [Player's Name]. Nice to meet you, Mr. Aizawa.",
+                                "line": {
+                                  "text": "Hmph, let's get this over with. Hand me the necessary papers, and we'll get your information sorted out.",
+                                  "next_event": {
+                                    "type": "monologue",
+                                    "data": {
+                                      "text": "I quickly hand over the required documents to Mr. Aizawa, who takes them with a no-nonsense expression. As he starts filling out the paperwork, I can feel his intense gaze occasionally flicking up to examine me. It's as if he's trying to assess my potential as a hero with just a single look. Wow, he really is as serious as they say. I hope he doesn't find me lacking or anything. Maybe he'll warm up after a while?\n\nAfter completing the paperwork, Aizawa retrieves a camera and points it at me, signaling that it's time to take the student report card photo. I do my best to stand straight and appear confident, but I can't help but feel a bit self-conscious under his scrutiny.",
+                                      "next_event": {
+                                        "type": "dialogue",
+                                        "data": {
+                                          "character": "aizawa_school_uniform",
+                                          "line": {
+                                            "text": "Just look at the camera and don't make any unnecessary expressions. This is just for your student file.",
+                                            "answers": [
+                                              {
+                                                "preview": "Okay",
+                                                "text": "Okay, got it!",
+                                                "line": {
+                                                  "text": "3, 2, 1, click!",
+                                                  "next_event": {
+                                                    "type": "monologue",
+                                                    "data": {
+                                                      "text": "The flash of the camera goes off, capturing the image that will represent me throughout my time at UA. With the paperwork and photo session now complete, Aizawa seems to relax slightly, or as much as Aizawa can relax.",
+                                                      "next_event": {
+                                                        "type": "dialogue",
+                                                        "data": {
+                                                          "character": "aizawa_school_uniform",
+                                                          "line": {
+                                                            "text": "That's it. Your student file is in order. Midoriya will show you to your dorm room. Make sure you attend the opening ceremony and the orientation for late transfer students. Don't slack off in my class; I have no tolerance for laziness. Got it?",
+                                                            "answers": [
+                                                              {
+                                                                "preview": "Yes, sir!",
+                                                                "text": "Yes, sir! I'll do my best!",
+                                                                "line": {
+                                                                  "text": "Good. Now, if you'll excuse me, I have other matters to attend to.",
+                                                                  "next_event": {
+                                                                    "type": "monologue",
+                                                                    "data": {
+                                                                      "text": "With that, Mr. Aizawa leaves, leaving me to gather my belongings and follow Midoriya to my new dorm room. As I walk alongside Midoriya, I can't help but wonder what challenges and adventures await me in this new chapter of my life at U.A. High School."
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            ]
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             ]
           }
-        }
-      },
-      {
-        "type": "monologue",
-        "data": {
-          "text": "As Midoriya walks away, I find a nearby chair to sit down and wait for Mr. Aizawa. The bustling atmosphere of the halls outside surrounds me, and I can't help but feel a mix of excitement and nerves. Being in this prestigious hero school still feels somewhat surreal. While waiting, I take a moment to look around and observe the other students passing by. Some are engaged in animated conversations, others are rushing off to classes, and a few are practicing their quirks in open spaces. It's a dynamic environment filled with aspiring heroes honing their skills. After a short while, I notice a stern-looking man making his way towards me. From what Midoriya described, I assume it's Mr. Aizawa, also known as Eraser Head, the strict and no-nonsense teacher. As he approaches, I can't help but feel a bit intimidated by his aura."
-        }
-      },
-      {
-        "type": "dialogue",
-        "data": {
-          "character": "aizawa_school_uniform",
-          "line": {
-            "text": "You must be the late transfer student. I'm Shota Aizawa, the homeroom teacher for Class 1-A. Midoriya said you're waiting for me to complete the paperwork.",
-            "answers": [
-              {
-                "preview": "Yes, that's right.",
-                "text": "Yes, that's right. I'm [Player's Name]. Nice to meet you, Mr. Aizawa.",
-                "line": {
-                  "text": "Hmph, let's get this over with. Hand me the necessary papers, and we'll get your information sorted out."
-                }
-              }
-            ]
-          }
-        }
-      },
-      {
-        "type": "monologue",
-        "data": {
-          "text": "I quickly hand over the required documents to Mr. Aizawa, who takes them with a no-nonsense expression. As he starts filling out the paperwork, I can feel his intense gaze occasionally flicking up to examine me. It's as if he's trying to assess my potential as a hero with just a single look. Wow, he really is as serious as they say. I hope he doesn't find me lacking or anything. Maybe he'll warm up after a while? After completing the paperwork, Aizawa retrieves a camera and points it at me, signaling that it's time to take the student report card photo. I do my best to stand straight and appear confident, but I can't help but feel a bit self-conscious under his scrutiny."
-        }
-      },
-      {
-        "type": "dialogue",
-        "data": {
-          "character": "aizawa_school_uniform",
-          "line": {
-            "text": "Just look at the camera and don't make any unnecessary expressions. This is just for your student file.",
-            "answers": [
-              {
-                "preview": "Okay",
-                "text": "Okay, got it.",
-                "line": {
-                  "text": "That's it. Your student file is in order. Midoriya will show you to your dorm room. Make sure you attend the opening ceremony and the orientation for late transfer students. Don't slack off in my class; I have no tolerance for laziness. Got it?"
-                }
-              },
-              {
-                "preview": "Yes, Mr. Aizawa.",
-                "text": "Yes, Mr. Aizawa. I'll do my best.",
-                "line": {
-                  "text": "Good. Now, if you'll excuse me, I have other matters to attend to."
-                }
-              }
-            ]
-          }
-        }
-      },
-      {
-        "type": "monologue",
-        "data": {
-          "text": "With that, Mr. Aizawa leaves, leaving me to gather my belongings and follow Midoriya to my new dorm room. As I walk alongside Midoriya, I can't help but wonder what challenges and adventures await me in this new chapter of my life at U.A. High School."
         }
       }
     ]
